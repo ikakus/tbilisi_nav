@@ -2,7 +2,6 @@ package ikakus.com.tbilisinav.modules.busroute.routelist
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.widget.Toast
 import ikakus.com.tbilisinav.BaseActivity
 import ikakus.com.tbilisinav.R
@@ -15,6 +14,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activty_route_list.*
 import org.koin.android.architecture.ext.viewModel
+import timber.log.Timber
 
 class RouteListActivity : BaseActivity(), MviView<RouteListIntent, RouteListViewState> {
     private lateinit var adapter: RouteListAdapter
@@ -49,11 +49,11 @@ class RouteListActivity : BaseActivity(), MviView<RouteListIntent, RouteListView
     override fun render(state: RouteListViewState) {
         if (state.isLoading) {
             Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-            Log.d("render", "Loading")
+            Timber.d("Loading")
         }
         if (state.error != null) {
             Toast.makeText(this, state.error.message, Toast.LENGTH_SHORT).show()
-            Log.d("render", state.error.message)
+            Timber.d( state.error.message)
 
         }
         if (state.error == null && !state.isLoading) {

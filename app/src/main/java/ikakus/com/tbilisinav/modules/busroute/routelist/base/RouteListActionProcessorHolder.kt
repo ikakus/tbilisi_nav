@@ -1,7 +1,7 @@
 package ikakus.com.tbilisinav.modules.busroute.routelist.base
 
 import ikakus.com.tbilisinav.core.schedulers.BaseSchedulerProvider
-import ikakus.com.tbilisinav.data.source.RouteDataSource
+import ikakus.com.tbilisinav.data.source.route.RouteDataSource
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 

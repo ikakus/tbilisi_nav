@@ -39,6 +39,7 @@ class RouteDetailsViewModel(
     private fun actionFromIntent(intent: RouteDetailsIntent): RouteDetailsAction {
         return when (intent) {
             is RouteDetailsIntent.InitialIntent -> RouteDetailsAction.GetRouteByIdAction(intent.routeId)
+            is RouteDetailsIntent.BusStopInfoIntent -> RouteDetailsAction.GetBusStopInfoAction(intent.routeStop)
         }
     }
 
@@ -60,6 +61,12 @@ class RouteDetailsViewModel(
                     is RouteDetailsResult.GetRouteByIdResult.Failure -> previousState.copy(isLoading = false, error = result.error)
                     is RouteDetailsResult.GetRouteByIdResult.InFlight -> previousState.copy(isLoading = true)
                 }
+                is RouteDetailsResult.GetBusStopInfoByIdResult.Success -> previousState.copy(
+                        isLoading = false,
+                        stopInfo = result.stopInfo
+                )
+                is RouteDetailsResult.GetBusStopInfoByIdResult.Failure -> previousState.copy(isLoading = false, error = result.error)
+                RouteDetailsResult.GetBusStopInfoByIdResult.InFlight -> previousState.copy(isLoading = true)
             }
         }
     }

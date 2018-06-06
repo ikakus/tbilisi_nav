@@ -4,8 +4,8 @@ buildscript {
     ext{
         kotlin_version = '1.2.41'
         support_version = '27.1.1'
-        daggerVersion = '2.12'
         koin_version = '0.9.2'
+        room_version = '1.1.0'
     }
 
     repositories {

@@ -8,11 +8,10 @@ import android.widget.FrameLayout
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.modules.busroute.routedetails.models.RouteStop
+import ikakus.com.tbilisinav.utils.GMapHelper
 import kotlinx.android.synthetic.main.route_map_view_layout.view.*
 
 
@@ -21,11 +20,15 @@ import kotlinx.android.synthetic.main.route_map_view_layout.view.*
  */
 class RouteMapView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs),
         OnMapReadyCallback,
-        GoogleMap.OnMapClickListener {
+        GoogleMap.OnMapClickListener,
+        GoogleMap.OnMarkerClickListener {
 
-    private lateinit var mMap: GoogleMap
-    private lateinit var mLineOptions: PolylineOptions
+    private var mMap: GoogleMap? = null
+    private var mLineOptions: PolylineOptions? = null
     private var mapReady: Boolean = false
+    private val mapHelper = GMapHelper()
+    private var stops: ArrayList<RouteStop> = ArrayList()
+    var routeStopClickListener: RouteStopClickListener? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.route_map_view_layout, this, true)
@@ -34,16 +37,38 @@ class RouteMapView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     override fun onMapReady(map: GoogleMap) {
         mMap = map
         mapReady = true
-        mMap.uiSettings.isZoomGesturesEnabled = true
-        mMap.uiSettings.isScrollGesturesEnabled = true
-        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap?.uiSettings?.isZoomGesturesEnabled = true
+        mMap?.uiSettings?.isScrollGesturesEnabled = true
+        mMap?.uiSettings?.isZoomControlsEnabled = true
 
-        if (this::mLineOptions.isInitialized) {
-            mMap.addPolyline(mLineOptions)
+        addMarkers(stops)
+        mLineOptions?.let {
+            mMap?.addPolyline(it)
         }
+
+        mMap?.setOnMarkerClickListener(this)
+
     }
 
     private lateinit var latLngArray: ArrayList<LatLng>
+
+    fun addMarkers(points: ArrayList<RouteStop>) {
+        stops = points
+        points.forEach {
+            val colorGreen = resources.getColor(R.color.marker_green)
+            val colorYellow = resources.getColor(R.color.marker_yellow)
+            val color = if (it.forward) colorGreen else colorYellow
+            val marker = MarkerOptions()
+                    .position(LatLng(it.lat, it.lng))
+                    .icon(mapHelper.getMarkerIcon(
+                            context,
+                            it.stopId.toString(),
+                            color))
+                    .anchor(0.5f, 0.5f)
+
+            mMap?.addMarker(marker)?.tag = it
+        }
+    }
 
     fun addRoutePoints(points: ArrayList<RouteStop>) {
         latLngArray = ArrayList()
@@ -51,16 +76,14 @@ class RouteMapView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         addLatLngPoints(latLngArray)
     }
 
-    fun addLatLngPoints(latLngArray: ArrayList<LatLng>) {
+    fun addLatLngPoints(latLngArray: ArrayList<LatLng>, setCamera :Boolean = false) {
         mLineOptions = PolylineOptions()
-        mLineOptions.addAll(latLngArray)
-        mLineOptions.width(5F)
-        mLineOptions.color(resources.getColor(R.color.route_red))
-        if (this::mMap.isInitialized) {
-            mMap.addPolyline(mLineOptions)
-        }
+        mLineOptions?.addAll(latLngArray)
+        mLineOptions?.width(5F)
+        mLineOptions?.color(resources.getColor(R.color.route_red))
+        mMap?.addPolyline(mLineOptions)
 
-        if (mapReady) {
+        if (mapReady && latLngArray.isNotEmpty()) {
 
             val builder = LatLngBounds.Builder()
             latLngArray.map { builder.include(it) }
@@ -69,10 +92,21 @@ class RouteMapView(context: Context, attrs: AttributeSet) : FrameLayout(context,
             val padding = 140 // offset from edges of the map in pixels
             val cu = CameraUpdateFactory.newLatLngBounds(bounds, padding)
 
-            map_container.post({
-                mMap.moveCamera(cu)
-            })
+            if(setCamera) {
+                map_container.post({
+                    mMap?.moveCamera(cu)
+                })
+            }
         }
+    }
+
+    fun moveTo(point: LatLng){
+        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 17f))
+    }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+        routeStopClickListener?.selectStop(marker?.tag as RouteStop)
+        return true
     }
 
     fun onCreate(bundle: Bundle?) {
@@ -102,6 +136,10 @@ class RouteMapView(context: Context, attrs: AttributeSet) : FrameLayout(context,
 
     override fun onMapClick(p0: LatLng?) {
 
+    }
+
+    interface RouteStopClickListener{
+        fun selectStop(stop :RouteStop)
     }
 
 }

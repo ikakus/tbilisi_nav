@@ -13,13 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".modules.busroute.routelist.RouteListActivity">
+
+        </activity>
+        <activity android:name=".modules.busroute.routedetails.RouteDetailsActivity"/>
+        <activity android:name=".modules.nearbystops.NearbyStopsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".modules.busroute.routedetails.RouteDetailsActivity"/>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

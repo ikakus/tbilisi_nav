@@ -1,8 +1,14 @@
-package ikakus.com.tbilisinav.modules.busroute.routedetails
+package ikakus.com.tbilisinav.utils
 
+import android.content.Context
+import android.graphics.*
+import android.support.v4.content.ContextCompat
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import ikakus.com.tbilisinav.R
 
-class GMapHelper {
+class GMapHelper() {
     /**
      * Method to decode polyline points
      * Courtesy : http://jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
@@ -49,7 +55,7 @@ class GMapHelper {
         val innerDelimiter = ":"
         val delimiter = ","
 
-        if(encoded.isNotBlank()) {
+        if (encoded.isNotBlank()) {
             val elements = encoded.split(delimiter)
             if (elements.isNotEmpty()) {
                 elements.forEach {
@@ -62,5 +68,38 @@ class GMapHelper {
             }
         }
         return poly
+    }
+
+    fun getMarkerIcon(context: Context, letter: String, color: Int): BitmapDescriptor {
+        val circleDrawable = ContextCompat.getDrawable(context, R.drawable.map_marker)
+
+        circleDrawable?.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+        val canvas = Canvas()
+        val bitmap = Bitmap.createBitmap(
+                circleDrawable?.intrinsicWidth!!,
+                circleDrawable.intrinsicHeight,
+                Bitmap.Config.ARGB_8888)
+        canvas.setBitmap(bitmap)
+        circleDrawable.setBounds(
+                0,
+                0,
+                circleDrawable.intrinsicWidth,
+                circleDrawable.intrinsicHeight)
+        circleDrawable.draw(canvas)
+
+        val textPaint = Paint()
+        textPaint.textSize = context.resources.getDimension(R.dimen.marker_text_size)
+        textPaint.color = ContextCompat.getColor(context, R.color.white)
+        val bounds = Rect()
+        textPaint.getTextBounds(letter, 0, letter.length, bounds)
+
+        canvas.drawText(
+                letter,
+                circleDrawable.intrinsicWidth / 2F - bounds.width() / 2,
+                circleDrawable.intrinsicHeight / 2F + bounds.height() / 2,
+                textPaint)
+
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 }

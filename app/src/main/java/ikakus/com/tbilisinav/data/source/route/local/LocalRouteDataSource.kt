@@ -1,6 +1,6 @@
-package ikakus.com.tbilisinav.data.source.local
+package ikakus.com.tbilisinav.data.source.route.local
 
-import ikakus.com.tbilisinav.data.source.RouteDataSource
+import ikakus.com.tbilisinav.data.source.route.RouteDataSource
 import ikakus.com.tbilisinav.modules.busroute.routedetails.models.RouteModel
 import io.reactivex.Single
 

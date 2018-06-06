@@ -1,4 +1,4 @@
-package ikakus.com.tbilisinav.data.source
+package ikakus.com.tbilisinav.data.source.route
 
 import ikakus.com.tbilisinav.modules.busroute.routedetails.models.RouteModel
 import io.reactivex.Single
@@ -16,4 +16,5 @@ class RouteRepository(
         //Using local data is we don't have remote method for this
         return localDataSource.getRouteList()
     }
+
 }

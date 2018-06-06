@@ -2,6 +2,8 @@ package ikakus.com.tbilisinav.core.di
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import ikakus.com.tbilisinav.BuildConfig
+import ikakus.com.tbilisinav.core.JsonBodyInterceptor
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -32,6 +34,14 @@ class NetworkModule {
 
         bean {
             val client = OkHttpClient.Builder()
+
+            val loggingInterceptor = JsonBodyInterceptor()
+            loggingInterceptor.setLevel(JsonBodyInterceptor.Level.BODY)
+
+            if (BuildConfig.DEBUG) {
+                client.addInterceptor(loggingInterceptor)
+            }
+
             client.cache(get())
             client.readTimeout(5, TimeUnit.MINUTES)
             client.build()
