@@ -20,7 +20,7 @@ import ikakus.com.tbilisinav.modules.stopsmap.base.StopsMapViewState
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.route_map_view_layout.view.*
+import kotlinx.android.synthetic.main.map_view_layout.view.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.concurrent.TimeUnit

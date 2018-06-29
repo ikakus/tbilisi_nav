@@ -13,7 +13,7 @@ import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.data.source.navigation.models.Leg
 import ikakus.com.tbilisinav.utils.GMapHelper
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.route_map_view_layout.view.*
+import kotlinx.android.synthetic.main.map_view_layout.view.*
 
 
 /**
@@ -33,7 +33,7 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
     val mapReadyPublisher = PublishSubject.create<Boolean>()!!
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.route_map_view_layout, this, true)
+        LayoutInflater.from(context).inflate(R.layout.map_view_layout, this, true)
     }
 
     override fun onMapReady(map: GoogleMap) {

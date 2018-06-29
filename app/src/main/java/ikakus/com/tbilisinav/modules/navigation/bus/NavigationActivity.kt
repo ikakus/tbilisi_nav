@@ -1,5 +1,7 @@
 package ikakus.com.tbilisinav.modules.navigation.bus
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
@@ -22,10 +24,17 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val vModel: NavigationViewModel by viewModel()
 
+    private var fromLatLng: LatLng? = null
+    private var toLatLng: LatLng? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activty_navigation)
         navigationMapView.onCreate(savedInstanceState)
+
+        fromLatLng = intent.extras?.getParcelable(FROM_LATLNG)!!
+        toLatLng = intent.extras?.getParcelable(TO_LATLNG)!!
+
         navigationMapView.mapReadyPublisher.subscribe {
             bind()
         }
@@ -51,9 +60,9 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
 //        val from = LatLng(41.723157, 44.721624)
 //        val to = LatLng(41.725975, 44.769346)
-        val from = LatLng(41.725431, 44.7458504)
-        val to = LatLng(41.704032, 44.789967)
-        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
+//        val from = LatLng(41.725431, 44.7458504)
+//        val to = LatLng(41.704032, 44.789967)
+        return Observable.just(NavigationIntent.BusNavigateIntent(fromLatLng!!, toLatLng!!))
     }
 
     override fun render(state: NavigationViewState) {
@@ -66,7 +75,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             Timber.d(state.error.message)
 
         }
-        if (state.busNavigation != null) {
+        if (state.busNavigation?.plan != null) {
             val plan = state.busNavigation.plan
 
             tvFrom.text = "From: " + plan.from.name
@@ -115,5 +124,17 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     override fun onLowMemory() {
         super.onLowMemory()
         navigationMapView.onLowMemory()
+    }
+
+    companion object {
+        private val FROM_LATLNG = "from"
+        private val TO_LATLNG = "to"
+
+        fun start(context: Context, from: LatLng, to: LatLng) {
+            val intent = Intent(context, NavigationActivity::class.java)
+            intent.putExtra(FROM_LATLNG, from)
+            intent.putExtra(TO_LATLNG, to)
+            context.startActivity(intent)
+        }
     }
 }

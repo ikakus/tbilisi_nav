@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.*
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.modules.busroute.routedetails.models.RouteStop
 import ikakus.com.tbilisinav.utils.GMapHelper
-import kotlinx.android.synthetic.main.route_map_view_layout.view.*
+import kotlinx.android.synthetic.main.map_view_layout.view.*
 
 
 /**
@@ -31,7 +31,7 @@ class RouteMapView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     var routeStopClickListener: RouteStopClickListener? = null
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.route_map_view_layout, this, true)
+        LayoutInflater.from(context).inflate(R.layout.map_view_layout, this, true)
     }
 
     override fun onMapReady(map: GoogleMap) {
