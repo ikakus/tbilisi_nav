@@ -5,6 +5,7 @@ import ikakus.com.tbilisinav.core.di.DatabaseModule
 import ikakus.com.tbilisinav.core.di.NetworkModule
 import ikakus.com.tbilisinav.modules.busroute.routedetails.di.RouteDetailsModule
 import ikakus.com.tbilisinav.modules.busroute.routelist.di.RouteListModule
+import ikakus.com.tbilisinav.modules.navigation.bus.di.NavigationModule
 import ikakus.com.tbilisinav.modules.nearbystops.di.NearbyModule
 import ikakus.com.tbilisinav.modules.stopinfo.di.StopInfoModule
 import ikakus.com.tbilisinav.modules.stopsmap.di.StopsMapModule
@@ -36,6 +37,7 @@ class App : Application() {
                 RouteListModule().instance,
                 StopsMapModule().instance,
                 StopInfoModule().instance,
+                NavigationModule().instance,
                 NearbyModule().instance))
     }
 }
