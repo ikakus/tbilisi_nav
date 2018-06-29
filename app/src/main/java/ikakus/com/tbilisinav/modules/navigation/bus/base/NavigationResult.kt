@@ -2,6 +2,7 @@ package ikakus.com.tbilisinav.modules.navigation.bus.base
 
 import ikakus.com.tbilisinav.core.mvibase.MviResult
 import ikakus.com.tbilisinav.data.source.navigation.models.BusNavigationResponseModel
+import ikakus.com.tbilisinav.data.source.navigation.models.Leg
 
 sealed class NavigationResult : MviResult {
     sealed class NavigateFromToResult : NavigationResult(){
@@ -10,4 +11,7 @@ sealed class NavigationResult : MviResult {
         object InFlight : NavigateFromToResult()
     }
 
+    sealed class SelectLegResult : NavigationResult(){
+        data class Success(val leg: Leg) : SelectLegResult()
+    }
 }

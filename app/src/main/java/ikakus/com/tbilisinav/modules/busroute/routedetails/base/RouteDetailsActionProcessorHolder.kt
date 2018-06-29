@@ -46,21 +46,21 @@ class RouteDetailsActionProcessorHolder(
 
     internal var actionProcessor =
             ObservableTransformer<RouteDetailsAction, RouteDetailsResult> { actions ->
-                actions.publish({ shared ->
+                actions.publish { shared ->
                     Observable.merge<RouteDetailsResult>(
                             shared.ofType(GetRouteByIdAction::class.java).compose(getRouteProcessor),
                             shared.ofType(GetBusStopInfoAction::class.java).compose(getStopInfoProcessor))
                             .mergeWith(
                                     // Error for not implemented actions
-                                    shared.filter({ v ->
+                                    shared.filter { v ->
                                         (v !is GetRouteByIdAction
                                                 && v !is GetBusStopInfoAction
                                                 )
-                                    })
-                                            .flatMap({ w ->
+                                    }
+                                            .flatMap { w ->
                                                 Observable.error<RouteDetailsResult>(
                                                         IllegalArgumentException("Unknown Action type: " + w))
-                                            }))
-                })
+                                            })
+                }
             }
 }

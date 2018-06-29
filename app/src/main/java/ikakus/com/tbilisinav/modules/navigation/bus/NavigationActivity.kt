@@ -14,6 +14,7 @@ import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewModel
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewState
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activty_navigation.*
 import org.koin.android.architecture.ext.viewModel
 import timber.log.Timber
@@ -24,8 +25,12 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val vModel: NavigationViewModel by viewModel()
 
+    private val selectLegIntent = PublishSubject.create<NavigationIntent.SelectLegIntent>()
+
     private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
+
+    private var isInitialized = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +45,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         }
 
         stepGuideView.pageChangePublisher.subscribe {
-            navigationMapView.show(it)
+            selectLegIntent.onNext(NavigationIntent.SelectLegIntent(it))
         }
 
     }
@@ -54,7 +59,9 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         vModel.processIntents(intents())
     }
 
-    override fun intents(): Observable<NavigationIntent> = initialIntent()
+    override fun intents(): Observable<NavigationIntent>{
+        return Observable.merge(initialIntent(), getSelectLegIntent())
+    }
 
     private fun initialIntent(): Observable<NavigationIntent> {
 
@@ -63,6 +70,11 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 //        val from = LatLng(41.725431, 44.7458504)
 //        val to = LatLng(41.704032, 44.789967)
         return Observable.just(NavigationIntent.BusNavigateIntent(fromLatLng!!, toLatLng!!))
+//        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
+    }
+
+    private fun getSelectLegIntent() : Observable<NavigationIntent.SelectLegIntent>{
+        return selectLegIntent
     }
 
     override fun render(state: NavigationViewState) {
@@ -75,7 +87,12 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             Timber.d(state.error.message)
 
         }
-        if (state.busNavigation?.plan != null) {
+
+        if (state.selectedLeg != null) {
+            navigationMapView.show(state.selectedLeg)
+        }
+
+        if (state.busNavigation?.plan != null && !isInitialized) {
             val plan = state.busNavigation.plan
 
             tvFrom.text = "From: " + plan.from.name
@@ -88,7 +105,8 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
                     navigationMapView.addLeg(it, legColor)
                 }
             }
-            stepGuideView.setNavigationData(inter)
+            stepGuideView.setNavigationData(inter, state.selectedLeg)
+            isInitialized = true
         }
     }
 

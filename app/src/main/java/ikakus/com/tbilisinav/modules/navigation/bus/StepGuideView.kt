@@ -30,10 +30,15 @@ class StepGuideView(context: Context, attrs: AttributeSet) :
 
     private var legs: List<Leg>? = null
 
-    fun setNavigationData(itinerary: Itinerary) {
+    fun setNavigationData(itinerary: Itinerary, selectedLeg : Leg?) {
         legs = itinerary.legs
         pagerAdapter.items = itinerary.legs
-        pageChangePublisher.onNext(legs!![0])
+        if(selectedLeg == null) {
+            pageChangePublisher.onNext(legs!![0])
+        }else{
+            val index = legs?.indexOf(selectedLeg)
+            viewpager.setCurrentItem(index!!, false)
+        }
     }
 
     private inner class PageChangeListener : ViewPager.OnPageChangeListener{

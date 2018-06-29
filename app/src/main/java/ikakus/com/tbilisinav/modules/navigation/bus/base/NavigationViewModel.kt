@@ -38,6 +38,7 @@ class NavigationViewModel(private val actionProcessorHolder: NavigationActionPro
     private fun actionFromIntent(intent: NavigationIntent): NavigationAction {
         return when (intent) {
             is NavigationIntent.BusNavigateIntent -> NavigationAction.BusNavigateAction(intent.from, intent.to)
+            is NavigationIntent.SelectLegIntent -> NavigationAction.SelectLegAction(intent.leg)
         }
     }
 
@@ -59,6 +60,7 @@ class NavigationViewModel(private val actionProcessorHolder: NavigationActionPro
                     is NavigationResult.NavigateFromToResult.Failure -> previousState.copy(isLoading = false, error = result.error)
                     is NavigationResult.NavigateFromToResult.InFlight -> previousState.copy(isLoading = true)
                 }
+                is NavigationResult.SelectLegResult.Success -> previousState.copy(selectedLeg = result.leg)
             }
         }
     }

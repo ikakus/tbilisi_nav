@@ -4,6 +4,7 @@ import ikakus.com.tbilisinav.core.schedulers.BaseSchedulerProvider
 import ikakus.com.tbilisinav.data.source.navigation.NavigationRepository
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.Single
 
 
 class NavigationActionProcessorHolder(
@@ -24,13 +25,30 @@ class NavigationActionProcessorHolder(
                 }
             }
 
+    private val getSelectedLegProcessor =
+            ObservableTransformer<NavigationAction.SelectLegAction, NavigationResult> { actions ->
+                actions.flatMap { action ->
+                    Single.just(action.leg)
+                            .toObservable()
+                            .map { NavigationResult.SelectLegResult.Success(it) }
+                            .cast(NavigationResult.SelectLegResult::class.java)
+                            .subscribeOn(schedulerProvider.io())
+                            .observeOn(schedulerProvider.ui())
+                }
+            }
+
+
     internal var actionProcessor =
             ObservableTransformer<NavigationAction, NavigationResult> { actions ->
                 actions.publish { shared ->
-                    shared.ofType(NavigationAction.BusNavigateAction::class.java).compose(getRouteProcessor)
-                            .cast(NavigationResult::class.java)
+                    Observable.merge<NavigationResult>(
+                            shared.ofType(NavigationAction.BusNavigateAction::class.java).compose(getRouteProcessor),
+                            shared.ofType(NavigationAction.SelectLegAction::class.java).compose(getSelectedLegProcessor))
                             .mergeWith(
-                                    shared.filter { v -> v !is NavigationAction.BusNavigateAction }
+                                    shared.filter { v ->
+                                        v !is NavigationAction.BusNavigateAction &&
+                                                v !is NavigationAction.SelectLegAction
+                                    }
                                             .flatMap { w ->
                                                 Observable.error<NavigationResult>(
                                                         IllegalArgumentException("Unknown Action type: " + w))
