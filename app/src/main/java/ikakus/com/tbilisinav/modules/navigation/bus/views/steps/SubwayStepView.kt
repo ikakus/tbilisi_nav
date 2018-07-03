@@ -1,4 +1,4 @@
-package ikakus.com.tbilisinav.modules.navigation.bus.views
+package ikakus.com.tbilisinav.modules.navigation.bus.views.steps
 
 import android.content.Context
 import android.view.LayoutInflater

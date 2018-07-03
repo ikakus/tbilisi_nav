@@ -84,6 +84,11 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
         }
     }
 
+    fun clear(){
+        legs.clear()
+        mMap?.clear()
+    }
+
     fun moveTo(point: LatLng) {
         mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 17f))
     }

@@ -5,6 +5,7 @@
     <color name="colorAccent">#558b2f</color>
     <color name="route_red">#bc3234</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="grayish">#FFE9E9E9</color>
     <color name="marker_green">#2e7d32</color>
     <color name="marker_yellow">#fdd835</color>

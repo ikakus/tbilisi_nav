@@ -44,7 +44,7 @@ class RemoteNavigationDataSource(retrofit: Retrofit) : NavigationDataSource {
         // fromPlace=41.723157,44.721624
 
 
-        @GET("http://transiten.ttc.com.ge/opentripplanner-api-webapp/ws/plan?")
+        @GET("http://transit.ttc.com.ge/opentripplanner-api-webapp/ws/plan?")
         fun navigate(@Query("fromPlace") from: String,
                      @Query("toPlace") to: String): Single<BusNavigationResponseModel>
 

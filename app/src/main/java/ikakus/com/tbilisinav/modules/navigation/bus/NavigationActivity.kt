@@ -37,8 +37,8 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         setContentView(R.layout.activty_navigation)
         navigationMapView.onCreate(savedInstanceState)
 
-        fromLatLng = intent.extras?.getParcelable(FROM_LATLNG)!!
-        toLatLng = intent.extras?.getParcelable(TO_LATLNG)!!
+//        fromLatLng = intent.extras?.getParcelable(FROM_LATLNG)!!
+//        toLatLng = intent.extras?.getParcelable(TO_LATLNG)!!
 
         navigationMapView.mapReadyPublisher.subscribe {
             bind()
@@ -46,6 +46,19 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
         stepGuideView.pageChangePublisher.subscribe {
             selectLegIntent.onNext(NavigationIntent.SelectLegIntent(it))
+        }
+
+        routeSelector.selectedRoutePublisher.subscribe { itinerary ->
+            navigationMapView.clear()
+
+            itinerary.legs.forEach {
+                val legColor = getRandomColor()
+                navigationMapView.addLeg(it, legColor)
+            }
+
+            stepGuideView.setNavigationData(itinerary)
+            selectLegIntent.onNext(NavigationIntent.SelectLegIntent(itinerary.legs.first()))
+
         }
 
     }
@@ -59,7 +72,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         vModel.processIntents(intents())
     }
 
-    override fun intents(): Observable<NavigationIntent>{
+    override fun intents(): Observable<NavigationIntent> {
         return Observable.merge(initialIntent(), getSelectLegIntent())
     }
 
@@ -67,13 +80,13 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
 //        val from = LatLng(41.723157, 44.721624)
 //        val to = LatLng(41.725975, 44.769346)
-//        val from = LatLng(41.725431, 44.7458504)
-//        val to = LatLng(41.704032, 44.789967)
-        return Observable.just(NavigationIntent.BusNavigateIntent(fromLatLng!!, toLatLng!!))
-//        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
+        val from = LatLng(41.725431, 44.7458504)
+        val to = LatLng(41.704032, 44.789967)
+//        return Observable.just(NavigationIntent.BusNavigateIntent(fromLatLng!!, toLatLng!!))
+        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
     }
 
-    private fun getSelectLegIntent() : Observable<NavigationIntent.SelectLegIntent>{
+    private fun getSelectLegIntent(): Observable<NavigationIntent.SelectLegIntent> {
         return selectLegIntent
     }
 
@@ -82,10 +95,10 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
             Timber.d("Loading")
         }
+
         if (state.error != null) {
             Toast.makeText(this, state.error.message, Toast.LENGTH_SHORT).show()
             Timber.d(state.error.message)
-
         }
 
         if (state.selectedLeg != null) {
@@ -94,18 +107,9 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
         if (state.busNavigation?.plan != null && !isInitialized) {
             val plan = state.busNavigation.plan
-
-            tvFrom.text = "From: " + plan.from.name
-            tvTo.text = "To: " + plan.to.name
-
-            val inter = plan.itineraries[0]
-            inter.let {
-                it.legs.forEach {
-                    val legColor = getRandomColor()
-                    navigationMapView.addLeg(it, legColor)
-                }
-            }
-            stepGuideView.setNavigationData(inter, state.selectedLeg)
+            routeSelector.setPlan(plan)
+            val notif = state.selectedLeg == null
+            stepGuideView.setSelectedLeg(state.selectedLeg, notif)
             isInitialized = true
         }
     }

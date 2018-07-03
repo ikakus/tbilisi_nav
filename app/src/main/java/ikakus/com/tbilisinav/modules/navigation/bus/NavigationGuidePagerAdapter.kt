@@ -41,4 +41,8 @@ class NavigationGuidePagerAdapter(private val context: Context) : PagerAdapter()
         return ""
     }
 
+    override fun getItemPosition(`object`: Any): Int {
+        return PagerAdapter.POSITION_NONE
+    }
+
 }
