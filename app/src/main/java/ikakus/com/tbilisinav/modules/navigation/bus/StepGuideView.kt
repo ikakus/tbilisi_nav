@@ -35,12 +35,14 @@ class StepGuideView(context: Context, attrs: AttributeSet) :
         pagerAdapter.notifyDataSetChanged()
     }
 
-    fun setSelectedLeg(selectedLeg: Leg?, notify :Boolean) {
-        if (notify) {
-            pageChangePublisher.onNext(legs!![0])
-        } else {
-            val index = legs?.indexOf(selectedLeg)
-            viewpager.setCurrentItem(index!!, false)
+    fun setSelectedLeg(selectedLeg: Leg?) {
+        if(legs != null) {
+            if (selectedLeg == null) {
+                pageChangePublisher.onNext(legs!![0])
+            } else {
+                val index = legs?.indexOf(selectedLeg)
+                viewpager.setCurrentItem(index!!, false)
+            }
         }
     }
 

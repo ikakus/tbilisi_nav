@@ -26,11 +26,12 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     private val vModel: NavigationViewModel by viewModel()
 
     private val selectLegIntent = PublishSubject.create<NavigationIntent.SelectLegIntent>()
+    private val selectRouteIntent = PublishSubject.create<NavigationIntent.SelectRouteIntent>()
 
     private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
 
-    private var isInitialized = false;
+    private var isInitialized = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +49,8 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             selectLegIntent.onNext(NavigationIntent.SelectLegIntent(it))
         }
 
-        routeSelector.selectedRoutePublisher.subscribe { itinerary ->
-            navigationMapView.clear()
-
-            itinerary.legs.forEach {
-                val legColor = getRandomColor()
-                navigationMapView.addLeg(it, legColor)
-            }
-
-            stepGuideView.setNavigationData(itinerary)
-            selectLegIntent.onNext(NavigationIntent.SelectLegIntent(itinerary.legs.first()))
-
+        routeSelector.selectedRoutePublisher.subscribe {
+            selectRouteIntent.onNext(NavigationIntent.SelectRouteIntent(it))
         }
 
     }
@@ -73,7 +65,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     }
 
     override fun intents(): Observable<NavigationIntent> {
-        return Observable.merge(initialIntent(), getSelectLegIntent())
+        return Observable.merge(initialIntent(), getSelectLegIntent(), getSelectRouteIntent())
     }
 
     private fun initialIntent(): Observable<NavigationIntent> {
@@ -88,6 +80,10 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
     private fun getSelectLegIntent(): Observable<NavigationIntent.SelectLegIntent> {
         return selectLegIntent
+    }
+
+    private fun getSelectRouteIntent(): Observable<NavigationIntent.SelectRouteIntent> {
+        return selectRouteIntent
     }
 
     override fun render(state: NavigationViewState) {
@@ -108,9 +104,20 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         if (state.busNavigation?.plan != null && !isInitialized) {
             val plan = state.busNavigation.plan
             routeSelector.setPlan(plan)
-            val notif = state.selectedLeg == null
-            stepGuideView.setSelectedLeg(state.selectedLeg, notif)
+            stepGuideView.setSelectedLeg(state.selectedLeg)
             isInitialized = true
+        }
+
+        if(state.selectedRoute != null){
+            navigationMapView.clear()
+
+            state.selectedRoute.legs.forEach {
+                val legColor = getRandomColor()
+                navigationMapView.addLeg(it, legColor)
+            }
+
+            stepGuideView.setNavigationData(state.selectedRoute)
+            selectLegIntent.onNext(NavigationIntent.SelectLegIntent(state.selectedRoute.legs.first()))
         }
     }
 
