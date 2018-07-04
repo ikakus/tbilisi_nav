@@ -9,6 +9,9 @@ import com.google.android.gms.maps.model.LatLng
 import ikakus.com.tbilisinav.BaseActivity
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.core.mvibase.MviView
+import ikakus.com.tbilisinav.data.source.navigation.models.Itinerary
+import ikakus.com.tbilisinav.data.source.navigation.models.Leg
+import ikakus.com.tbilisinav.data.source.navigation.models.Plan
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationIntent
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewModel
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewState
@@ -30,8 +33,6 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
     private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
-
-    private var isInitialized = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +87,10 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         return selectRouteIntent
     }
 
+    var plan : Plan? = null
+    var route : Itinerary? = null
+    var leg : Leg? = null
+
     override fun render(state: NavigationViewState) {
         if (state.isLoading) {
             Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
@@ -97,28 +102,36 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             Timber.d(state.error.message)
         }
 
-        if (state.selectedLeg != null) {
-            navigationMapView.show(state.selectedLeg)
+        val setPlan = plan == null || !(plan?.equals(state.busNavigation?.plan)!!)
+        if (state.busNavigation?.plan != null && setPlan) {
+            plan = state.busNavigation.plan
+            routeSelector.setPlan(plan!!)
         }
 
-        if (state.busNavigation?.plan != null && !isInitialized) {
-            val plan = state.busNavigation.plan
-            routeSelector.setPlan(plan)
-            stepGuideView.setSelectedLeg(state.selectedLeg)
-            isInitialized = true
-        }
-
-        if(state.selectedRoute != null){
+        val setRoute = route == null || !(route?.equals(state.selectedRoute)!!)
+        if (state.selectedRoute != null && setRoute) {
+            route = state.selectedRoute
+            routeSelector.setSelectedRoute(route!!)
             navigationMapView.clear()
+            val legColor = getRandomColor()
 
             state.selectedRoute.legs.forEach {
-                val legColor = getRandomColor()
                 navigationMapView.addLeg(it, legColor)
             }
 
             stepGuideView.setNavigationData(state.selectedRoute)
-            selectLegIntent.onNext(NavigationIntent.SelectLegIntent(state.selectedRoute.legs.first()))
+            val leg = state.selectedRoute.legs.first()
+            navigationMapView.show(leg)
+            selectLegIntent.onNext(NavigationIntent.SelectLegIntent(leg))
         }
+
+        val setLeg = leg == null || !(leg?.equals(state.selectedLeg)!!)
+        if (state.selectedLeg != null && setLeg) {
+            leg = state.selectedLeg
+            navigationMapView.show(state.selectedLeg)
+            stepGuideView.setSelectedLeg(state.selectedLeg)
+        }
+
     }
 
     private fun getRandomColor(): Int {

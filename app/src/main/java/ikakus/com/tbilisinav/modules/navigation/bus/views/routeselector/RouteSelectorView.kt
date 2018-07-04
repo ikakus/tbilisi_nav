@@ -17,7 +17,7 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
         FrameLayout(context, attrs) {
 
     val selectedRoutePublisher = PublishSubject.create<Itinerary>()
-    private val itineraries = ArrayList<Itinerary>()
+    private var itineraries = ArrayList<Itinerary>()
 
     private var adapter: RouteSelectorAdapter
     init {
@@ -34,7 +34,7 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
         tvFrom.text = "From: " + plan.from.name
         tvTo.text = "To: " + plan.to.name
 
-        itineraries.addAll(plan.itineraries)
+        itineraries = ArrayList(plan.itineraries)
         val iti = itineraries.first()
         setSelectedRoute(iti)
         adapter.setData(itineraries)
@@ -48,7 +48,7 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
         }
     }
 
-    private fun setSelectedRoute(iti: Itinerary) {
+    fun setSelectedRoute(iti: Itinerary) {
         selectedRoutePublisher.onNext(iti)
         totalTime.text = TimeUnit.MILLISECONDS.toMinutes(iti.duration.toLong()).toString()
     }
