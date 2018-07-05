@@ -16,4 +16,5 @@
     <color name="bus_yellow">#F6CF09</color>
     <color name="subway_blue">#1496bb</color>
     <color name="walk_green">#15AC18</color>
+    <color name="transparent">#00000000</color>
 </resources>

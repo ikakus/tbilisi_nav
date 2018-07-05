@@ -36,9 +36,12 @@ class RouteSelectorAdapter : RecyclerView.Adapter<RouteSelectorAdapter.ViewHolde
         val route = dataSet[position]
         val sumMinutes = TimeUnit.MILLISECONDS.toMinutes(route.duration.toLong())
         holder.item.tvNum.text = sumMinutes.toString()
+        holder.item.container.removeAllViews()
         route.legs.forEach {
             holder.item.container.addView(MiniStepView(context!!, it))
         }
+
+        (holder.itemView).isSelected = position == selectedPosition
 //        val waitMinutes = TimeUnit.SECONDS.toMinutes(route.waitingTime.toLong())
 //        val tvWait = TextView(context!!)
 //        tvWait.text = " w time $waitMinutes"
@@ -49,12 +52,30 @@ class RouteSelectorAdapter : RecyclerView.Adapter<RouteSelectorAdapter.ViewHolde
 //        tvTransit.text = " t time $transitMinutes"
 //        holder.item.container.addView(tvTransit)
 //
-        holder.itemView.setOnClickListener { routeClickSubject.onNext(dataSet[position]) }
+        holder.itemView.setOnClickListener {
+            routeClickSubject.onNext(dataSet[position])
+        }
     }
 
     fun setData(list: ArrayList<Itinerary>) {
         dataSet = list
         notifyDataSetChanged()
+    }
+
+    private var selectedPosition: Int = 0
+
+    fun setSelection(itinerary: Itinerary) {
+        selectedPosition = getPosition(dataSet, itinerary)
+        notifyDataSetChanged()
+    }
+
+    fun getPosition(dataSet: ArrayList<Itinerary>, itinerary: Itinerary): Int {
+        if (dataSet.isNotEmpty()) {
+            for (i in 0..dataSet.size) {
+                if (dataSet[i] == itinerary) return i
+            }
+        }
+        return -1
     }
 
     class ViewHolder(val item: View) : RecyclerView.ViewHolder(item)

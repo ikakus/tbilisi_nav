@@ -20,12 +20,13 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
     private var itineraries = ArrayList<Itinerary>()
 
     private var adapter: RouteSelectorAdapter
+
     init {
         LayoutInflater.from(context).inflate(R.layout.route_selector_view_layout, this, true)
         adapter = RouteSelectorAdapter()
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-        adapter.taskClickObservable.subscribe{
+        adapter.taskClickObservable.subscribe {
             setSelectedRoute(it)
         }
     }
@@ -50,6 +51,7 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
 
     fun setSelectedRoute(iti: Itinerary) {
         selectedRoutePublisher.onNext(iti)
+        adapter.setSelection(iti)
         totalTime.text = TimeUnit.MILLISECONDS.toMinutes(iti.duration.toLong()).toString()
     }
 }

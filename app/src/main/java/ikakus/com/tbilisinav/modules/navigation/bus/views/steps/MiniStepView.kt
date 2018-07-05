@@ -7,8 +7,10 @@ import android.widget.FrameLayout
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.data.source.navigation.models.Leg
 import ikakus.com.tbilisinav.data.source.navigation.models.Mode
+import ikakus.com.tbilisinav.utils.DrawableHelper
 import ikakus.com.tbilisinav.utils.TimeHelper
 import kotlinx.android.synthetic.main.mini_step_view_layout.view.*
+
 
 class MiniStepView(context: Context) :
         FrameLayout(context) {
@@ -21,21 +23,23 @@ class MiniStepView(context: Context) :
         tvBusNum.visibility = View.GONE
         when (leg.mode) {
             Mode.WALK -> {
-                miniLegLayout.setBackgroundColor(context.resources?.getColor(R.color.walk_green)!!)
+                DrawableHelper.setDrawableColor(context,miniLegLayout,R.color.walk_green)
                 ivMode.setImageResource(R.drawable.ic_walk)
             }
             Mode.BUS -> {
                 tvBusNum.visibility = View.VISIBLE
                 tvBusNum.text = leg.route
-                miniLegLayout.setBackgroundColor(context.resources?.getColor(R.color.bus_yellow)!!)
+                DrawableHelper.setDrawableColor(context,miniLegLayout,R.color.bus_yellow)
                 ivMode.setImageResource(R.drawable.ic_bus)
             }
             Mode.SUBWAY -> {
 //                tvBusNum.visibility = View.VISIBLE
 //                tvBusNum.text = leg.route
-                miniLegLayout.setBackgroundColor(context.resources?.getColor(R.color.subway_blue)!!)
+                DrawableHelper.setDrawableColor(context,miniLegLayout,R.color.subway_blue)
                 ivMode.setImageResource(R.drawable.ic_subway)
             }
         }
     }
+
+
 }

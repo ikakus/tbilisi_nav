@@ -11,6 +11,7 @@ import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.core.mvibase.MviView
 import ikakus.com.tbilisinav.data.source.navigation.models.Itinerary
 import ikakus.com.tbilisinav.data.source.navigation.models.Leg
+import ikakus.com.tbilisinav.data.source.navigation.models.Mode
 import ikakus.com.tbilisinav.data.source.navigation.models.Plan
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationIntent
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewModel
@@ -113,9 +114,9 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             route = state.selectedRoute
             routeSelector.setSelectedRoute(route!!)
             navigationMapView.clear()
-            val legColor = getRandomColor()
 
             state.selectedRoute.legs.forEach {
+                val legColor = getLegColor(it)
                 navigationMapView.addLeg(it, legColor)
             }
 
@@ -140,6 +141,15 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
                 rnd.nextInt(256),
                 rnd.nextInt(256),
                 rnd.nextInt(256))
+    }
+
+
+    private fun getLegColor(leg: Leg): Int {
+        return when (leg.mode) {
+            Mode.BUS -> resources.getColor(R.color.bus_yellow)
+            Mode.WALK -> resources.getColor(R.color.walk_green)
+            Mode.SUBWAY -> resources.getColor(R.color.subway_blue)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
