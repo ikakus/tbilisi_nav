@@ -21,13 +21,16 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activty_navigation.*
 import org.koin.android.architecture.ext.viewModel
+import org.koin.android.ext.android.inject
 import timber.log.Timber
 import java.util.*
 
-class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationViewState> {
+class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationViewState>, ILegListener {
+
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val vModel: NavigationViewModel by viewModel()
+    private val navListener: NavListener by inject()
 
     private val selectLegIntent = PublishSubject.create<NavigationIntent.SelectLegIntent>()
     private val selectRouteIntent = PublishSubject.create<NavigationIntent.SelectRouteIntent>()
@@ -42,6 +45,8 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
 //        fromLatLng = intent.extras?.getParcelable(FROM_LATLNG)!!
 //        toLatLng = intent.extras?.getParcelable(TO_LATLNG)!!
+
+        navListener.receiver = this
 
         navigationMapView.mapReadyPublisher.subscribe {
             bind()
@@ -88,9 +93,9 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         return selectRouteIntent
     }
 
-    var plan : Plan? = null
-    var route : Itinerary? = null
-    var leg : Leg? = null
+    var plan: Plan? = null
+    var route: Itinerary? = null
+    var leg: Leg? = null
 
     override fun render(state: NavigationViewState) {
         if (state.isLoading) {
@@ -133,6 +138,14 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             stepGuideView.setSelectedLeg(state.selectedLeg)
         }
 
+    }
+
+    override fun showLeg(leg: Leg) {
+        navigationMapView.show(leg)
+    }
+
+    override fun showPoint(point: LatLng) {
+        navigationMapView.show(point)
     }
 
     private fun getRandomColor(): Int {
