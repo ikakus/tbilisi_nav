@@ -13,4 +13,7 @@
     <color name="route_end_point">#00ae5f</color>
     <color name="separator_gray">#a0c1b2</color>
     <color name="blue_text">#2979ff</color>
+    <color name="bus_yellow">#F6CF09</color>
+    <color name="subway_blue">#1496bb</color>
+    <color name="walk_green">#15AC18</color>
 </resources>

@@ -33,7 +33,8 @@
             android:layout_marginBottom="4dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="Take bus number "
+            android:textColor="@color/white"
+            android:text="@string/take_bus_number"
             />
 
         <TextView

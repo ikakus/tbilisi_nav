@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Tbilisi nav</string>
     <string name="key_google_api">AIzaSyDtf6I5OGhxJapM4rN4DF7p8FcblJrtLU8</string>
+    <string name="less_than_minute">less than a minute</string>
+    <string name="minute">%d min</string>
+    <string name="hour">%d h</string>
+    <string name="walk">Walk</string>
+    <string name="take_subway">Take subway</string>
+    <string name="take_bus_number">Take bus number</string>
 </resources>
