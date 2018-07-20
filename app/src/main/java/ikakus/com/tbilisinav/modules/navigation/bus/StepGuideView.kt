@@ -15,8 +15,8 @@ class StepGuideView(context: Context, attrs: AttributeSet) :
         FrameLayout(context, attrs) {
 
     private var pagerAdapter: NavigationGuidePagerAdapter
-
     private var pageChangeListener: PageChangeListener
+    private var legs: List<Leg>? = null
 
     val pageChangePublisher = PublishSubject.create<Leg>()
 
@@ -28,20 +28,25 @@ class StepGuideView(context: Context, attrs: AttributeSet) :
         viewpager.addOnPageChangeListener(pageChangeListener)
     }
 
-    private var legs: List<Leg>? = null
 
-    fun setNavigationData(itinerary: Itinerary, selectedLeg : Leg?) {
+    fun setNavigationData(itinerary: Itinerary) {
         legs = itinerary.legs
         pagerAdapter.items = itinerary.legs
-        if(selectedLeg == null) {
-            pageChangePublisher.onNext(legs!![0])
-        }else{
-            val index = legs?.indexOf(selectedLeg)
-            viewpager.setCurrentItem(index!!, false)
+        pagerAdapter.notifyDataSetChanged()
+    }
+
+    fun setSelectedLeg(selectedLeg: Leg?) {
+        if(legs != null) {
+            if (selectedLeg == null) {
+                pageChangePublisher.onNext(legs!![0])
+            } else {
+                val index = legs?.indexOf(selectedLeg)
+                viewpager.setCurrentItem(index!!, false)
+            }
         }
     }
 
-    private inner class PageChangeListener : ViewPager.OnPageChangeListener{
+    private inner class PageChangeListener : ViewPager.OnPageChangeListener {
         override fun onPageScrollStateChanged(state: Int) {
         }
 

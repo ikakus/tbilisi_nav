@@ -37,17 +37,31 @@ class NavigationActionProcessorHolder(
                 }
             }
 
+    private val getSelectedRouteProcessor =
+            ObservableTransformer<NavigationAction.SelectRouteAction, NavigationResult> { actions ->
+                actions.flatMap { action ->
+                    Single.just(action.itinerary)
+                            .toObservable()
+                            .map { NavigationResult.SelectRouteResult.Success(it) }
+                            .cast(NavigationResult.SelectRouteResult::class.java)
+                            .subscribeOn(schedulerProvider.io())
+                            .observeOn(schedulerProvider.ui())
+                }
+            }
+
 
     internal var actionProcessor =
             ObservableTransformer<NavigationAction, NavigationResult> { actions ->
                 actions.publish { shared ->
                     Observable.merge<NavigationResult>(
                             shared.ofType(NavigationAction.BusNavigateAction::class.java).compose(getRouteProcessor),
-                            shared.ofType(NavigationAction.SelectLegAction::class.java).compose(getSelectedLegProcessor))
+                            shared.ofType(NavigationAction.SelectLegAction::class.java).compose(getSelectedLegProcessor),
+                            shared.ofType(NavigationAction.SelectRouteAction::class.java).compose(getSelectedRouteProcessor))
                             .mergeWith(
                                     shared.filter { v ->
                                         v !is NavigationAction.BusNavigateAction &&
-                                                v !is NavigationAction.SelectLegAction
+                                                v !is NavigationAction.SelectLegAction &&
+                                                v !is NavigationAction.SelectRouteAction
                                     }
                                             .flatMap { w ->
                                                 Observable.error<NavigationResult>(

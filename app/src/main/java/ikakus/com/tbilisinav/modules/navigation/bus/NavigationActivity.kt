@@ -9,6 +9,10 @@ import com.google.android.gms.maps.model.LatLng
 import ikakus.com.tbilisinav.BaseActivity
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.core.mvibase.MviView
+import ikakus.com.tbilisinav.data.source.navigation.models.Itinerary
+import ikakus.com.tbilisinav.data.source.navigation.models.Leg
+import ikakus.com.tbilisinav.data.source.navigation.models.Mode
+import ikakus.com.tbilisinav.data.source.navigation.models.Plan
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationIntent
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewModel
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewState
@@ -17,20 +21,22 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activty_navigation.*
 import org.koin.android.architecture.ext.viewModel
+import org.koin.android.ext.android.inject
 import timber.log.Timber
 import java.util.*
 
-class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationViewState> {
+class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationViewState>, ILegListener {
+
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val vModel: NavigationViewModel by viewModel()
+    private val navListener: NavListener by inject()
 
     private val selectLegIntent = PublishSubject.create<NavigationIntent.SelectLegIntent>()
+    private val selectRouteIntent = PublishSubject.create<NavigationIntent.SelectRouteIntent>()
 
     private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
-
-    private var isInitialized = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +46,18 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         fromLatLng = intent.extras?.getParcelable(FROM_LATLNG)!!
         toLatLng = intent.extras?.getParcelable(TO_LATLNG)!!
 
+        navListener.receiver = this
+
         navigationMapView.mapReadyPublisher.subscribe {
             bind()
         }
 
         stepGuideView.pageChangePublisher.subscribe {
             selectLegIntent.onNext(NavigationIntent.SelectLegIntent(it))
+        }
+
+        routeSelector.selectedRoutePublisher.subscribe {
+            selectRouteIntent.onNext(NavigationIntent.SelectRouteIntent(it))
         }
 
     }
@@ -59,8 +71,8 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         vModel.processIntents(intents())
     }
 
-    override fun intents(): Observable<NavigationIntent>{
-        return Observable.merge(initialIntent(), getSelectLegIntent())
+    override fun intents(): Observable<NavigationIntent> {
+        return Observable.merge(initialIntent(), getSelectLegIntent(), getSelectRouteIntent())
     }
 
     private fun initialIntent(): Observable<NavigationIntent> {
@@ -73,41 +85,67 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 //        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
     }
 
-    private fun getSelectLegIntent() : Observable<NavigationIntent.SelectLegIntent>{
+    private fun getSelectLegIntent(): Observable<NavigationIntent.SelectLegIntent> {
         return selectLegIntent
     }
+
+    private fun getSelectRouteIntent(): Observable<NavigationIntent.SelectRouteIntent> {
+        return selectRouteIntent
+    }
+
+    var plan: Plan? = null
+    var route: Itinerary? = null
+    var leg: Leg? = null
 
     override fun render(state: NavigationViewState) {
         if (state.isLoading) {
             Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
             Timber.d("Loading")
         }
+
         if (state.error != null) {
             Toast.makeText(this, state.error.message, Toast.LENGTH_SHORT).show()
             Timber.d(state.error.message)
-
         }
 
-        if (state.selectedLeg != null) {
-            navigationMapView.show(state.selectedLeg)
+        val setPlan = plan == null || !(plan?.equals(state.busNavigation?.plan)!!)
+        if (state.busNavigation?.plan != null && setPlan) {
+            plan = state.busNavigation.plan
+            routeSelector.setPlan(plan!!)
         }
 
-        if (state.busNavigation?.plan != null && !isInitialized) {
-            val plan = state.busNavigation.plan
+        val setRoute = route == null || !(route?.equals(state.selectedRoute)!!)
+        if (state.selectedRoute != null && setRoute) {
+            route = state.selectedRoute
+            routeSelector.setSelectedRoute(route!!)
+            navigationMapView.clear()
 
-            tvFrom.text = "From: " + plan.from.name
-            tvTo.text = "To: " + plan.to.name
-
-            val inter = plan.itineraries[0]
-            inter.let {
-                it.legs.forEach {
-                    val legColor = getRandomColor()
-                    navigationMapView.addLeg(it, legColor)
-                }
+            state.selectedRoute.legs.forEach {
+                val legColor = getLegColor(it)
+                navigationMapView.addLeg(it, legColor)
             }
-            stepGuideView.setNavigationData(inter, state.selectedLeg)
-            isInitialized = true
+
+            stepGuideView.setNavigationData(state.selectedRoute)
+            val leg = state.selectedRoute.legs.first()
+            navigationMapView.show(leg)
+            selectLegIntent.onNext(NavigationIntent.SelectLegIntent(leg))
         }
+
+        val setLeg = leg == null || !(leg?.equals(state.selectedLeg)!!)
+        if (state.selectedLeg != null && setLeg) {
+            leg = state.selectedLeg
+            navigationMapView.show(state.selectedLeg)
+            stepGuideView.setSelectedLeg(state.selectedLeg)
+        }
+
+    }
+
+    override fun showLeg(leg: Leg) {
+        navigationMapView.show(leg)
+    }
+
+    override fun showPoint(point: LatLng) {
+        navigationMapView.show(point)
     }
 
     private fun getRandomColor(): Int {
@@ -116,6 +154,15 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
                 rnd.nextInt(256),
                 rnd.nextInt(256),
                 rnd.nextInt(256))
+    }
+
+
+    private fun getLegColor(leg: Leg): Int {
+        return when (leg.mode) {
+            Mode.BUS -> resources.getColor(R.color.bus_yellow)
+            Mode.WALK -> resources.getColor(R.color.walk_green)
+            Mode.SUBWAY -> resources.getColor(R.color.subway_blue)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

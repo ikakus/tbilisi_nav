@@ -18,7 +18,7 @@ class RouteListAdapter : RecyclerView.Adapter<RouteListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteListAdapter.ViewHolder {
         val textView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.my_text_view, parent, false) as TextView
+                .inflate(R.layout.route_selection_item_view, parent, false) as TextView
         return ViewHolder(textView)
     }
 

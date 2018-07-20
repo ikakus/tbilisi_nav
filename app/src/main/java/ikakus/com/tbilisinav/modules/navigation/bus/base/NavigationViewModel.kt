@@ -39,6 +39,7 @@ class NavigationViewModel(private val actionProcessorHolder: NavigationActionPro
         return when (intent) {
             is NavigationIntent.BusNavigateIntent -> NavigationAction.BusNavigateAction(intent.from, intent.to)
             is NavigationIntent.SelectLegIntent -> NavigationAction.SelectLegAction(intent.leg)
+            is NavigationIntent.SelectRouteIntent -> NavigationAction.SelectRouteAction(intent.itinerary)
         }
     }
 
@@ -61,6 +62,7 @@ class NavigationViewModel(private val actionProcessorHolder: NavigationActionPro
                     is NavigationResult.NavigateFromToResult.InFlight -> previousState.copy(isLoading = true)
                 }
                 is NavigationResult.SelectLegResult.Success -> previousState.copy(selectedLeg = result.leg)
+                is NavigationResult.SelectRouteResult.Success -> previousState.copy(selectedRoute = result.itinerary)
             }
         }
     }

@@ -7,9 +7,9 @@ import android.widget.TextView
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.data.source.navigation.models.Leg
 import ikakus.com.tbilisinav.data.source.navigation.models.Mode
-import ikakus.com.tbilisinav.modules.navigation.bus.views.BusStepView
-import ikakus.com.tbilisinav.modules.navigation.bus.views.SubwayStepView
-import ikakus.com.tbilisinav.modules.navigation.bus.views.WalkStepView
+import ikakus.com.tbilisinav.modules.navigation.bus.views.steps.BusStepView
+import ikakus.com.tbilisinav.modules.navigation.bus.views.steps.SubwayStepView
+import ikakus.com.tbilisinav.modules.navigation.bus.views.steps.WalkStepView
 import kotlinx.android.synthetic.main.step_view_layout.view.*
 
 class StepView(context: Context) :
