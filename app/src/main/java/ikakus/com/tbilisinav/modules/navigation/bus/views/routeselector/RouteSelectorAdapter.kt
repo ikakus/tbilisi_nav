@@ -18,7 +18,7 @@ class RouteSelectorAdapter : RecyclerView.Adapter<RouteSelectorAdapter.ViewHolde
 
     private val routeClickSubject = PublishSubject.create<Itinerary>()
 
-    val taskClickObservable: Observable<Itinerary>
+    val clickObservable: Observable<Itinerary>
         get() = routeClickSubject
 
     private var context: Context? = null

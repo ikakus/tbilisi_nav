@@ -23,15 +23,16 @@ class StepGuideView(context: Context, attrs: AttributeSet) :
     init {
         LayoutInflater.from(context).inflate(R.layout.navigation_guide_view_layout, this, true)
         pagerAdapter = NavigationGuidePagerAdapter(context)
-        viewpager!!.adapter = pagerAdapter
+        viewPager!!.adapter = pagerAdapter
         pageChangeListener = PageChangeListener()
-        viewpager.addOnPageChangeListener(pageChangeListener)
+        viewPager.addOnPageChangeListener(pageChangeListener)
     }
 
 
     fun setNavigationData(itinerary: Itinerary) {
         legs = itinerary.legs
-        pagerAdapter.items = itinerary.legs
+        pageIndicator.setIndicatorsCount(legs?.size!!)
+        pagerAdapter.items = legs!!
         pagerAdapter.notifyDataSetChanged()
     }
 
@@ -41,7 +42,7 @@ class StepGuideView(context: Context, attrs: AttributeSet) :
                 pageChangePublisher.onNext(legs!![0])
             } else {
                 val index = legs?.indexOf(selectedLeg)
-                viewpager.setCurrentItem(index!!, false)
+                viewPager.setCurrentItem(index!!, false)
             }
         }
     }
@@ -55,6 +56,7 @@ class StepGuideView(context: Context, attrs: AttributeSet) :
 
         override fun onPageSelected(position: Int) {
             pageChangePublisher.onNext(legs!![position])
+            pageIndicator.setPosition(position)
         }
 
     }

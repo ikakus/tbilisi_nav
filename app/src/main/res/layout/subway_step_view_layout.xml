@@ -19,42 +19,43 @@
             android:id="@+id/imageSubway"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_margin="2dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="2dp"
             android:src="@drawable/ic_subway"/>
 
         <TextView
             android:id="@+id/textView"
-            android:layout_toRightOf="@+id/imageSubway"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginBottom="4dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:textColor="@color/white"
+            android:layout_toRightOf="@+id/imageSubway"
             android:text="@string/take_subway"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             />
 
         <ImageView
             android:id="@+id/imageClock"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:layout_margin="2dp"
             android:layout_centerVertical="true"
+            android:layout_margin="2dp"
             android:layout_toLeftOf="@id/tvTime"
             android:src="@drawable/ic_clock_outline"/>
 
         <TextView
             android:id="@+id/tvTime"
-            android:textSize="14sp"
-            android:textColor="@color/white"
-            android:layout_marginEnd="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -76,7 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="4dp"
-            android:text="From"/>
+            android:text="@string/startPoint"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvFrom"
@@ -84,6 +87,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/address"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:text="TextView"
             />
     </LinearLayout>
@@ -109,7 +116,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="4dp"
-            android:text="To"/>
+            android:text="@string/endPoint"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvTo"
@@ -117,6 +126,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/address"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:text="TextView"
             />
     </LinearLayout>
@@ -138,16 +151,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/bullet"/>
+            android:src="@drawable/bullet_a"/>
 
         <View
             android:id="@+id/line"
-            android:layout_width="2dp"
+            android:layout_width="3dp"
             android:layout_height="match_parent"
             android:layout_above="@id/bottomBullet"
             android:layout_below="@id/topBullet"
             android:layout_centerHorizontal="true"
-            android:background="@color/marker_green"/>
+            android:layout_margin="2dp"
+            android:background="@color/subway_step_color"/>
 
         <ImageView
             android:id="@+id/bottomBullet"
@@ -155,7 +169,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/bullet"/>
+            android:src="@drawable/bullet_b"/>
     </RelativeLayout>
-
 </android.support.constraint.ConstraintLayout>

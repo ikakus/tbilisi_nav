@@ -1,6 +1,7 @@
 package ikakus.com.tbilisinav.modules.navigation.bus.views.routeselector
 
 import android.content.Context
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import ikakus.com.tbilisinav.data.source.navigation.models.Plan
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.route_selector_view_layout.view.*
 import java.util.concurrent.TimeUnit
+
+
 
 class RouteSelectorView(context: Context, attrs: AttributeSet) :
         FrameLayout(context, attrs) {
@@ -26,14 +29,19 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
         adapter = RouteSelectorAdapter()
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-        adapter.taskClickObservable.subscribe {
+        recyclerView.addItemDecoration(DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL))
+        adapter.clickObservable.subscribe {
             setSelectedRoute(it)
+            togleList()
         }
     }
 
     fun setPlan(plan: Plan) {
-        tvFrom.text = "From: " + plan.from.name
-        tvTo.text = "To: " + plan.to.name
+        tvFrom.text = plan.from.name
+        tvTo.text = plan.to.name
+
+        tvCounter.text = "+ ${plan.itineraries.size - 1} more"
 
         itineraries = ArrayList(plan.itineraries)
         val iti = itineraries.first()
@@ -41,11 +49,21 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
         adapter.setData(itineraries)
 
         imageView2.setOnClickListener {
-            if (recyclerView.visibility == View.VISIBLE) {
-                recyclerView.visibility = View.GONE
-            } else {
-                recyclerView.visibility = View.VISIBLE
-            }
+            togleList()
+        }
+        tvCounter.setOnClickListener {
+            togleList()
+        }
+    }
+
+    private fun togleList() {
+        if (recyclerView.visibility == View.VISIBLE) {
+            recyclerView.visibility = View.GONE
+            tvCounter.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            tvCounter.visibility = View.GONE
+
         }
     }
 

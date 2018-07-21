@@ -6,6 +6,14 @@ import java.util.concurrent.TimeUnit
 
 class TimeHelper(val context: Context) {
 
+    fun getMinutesFromMillis(millis: Long): String{
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
+        if(minutes < 1){
+            return context.resources.getString(R.string.minute, 1)
+        }
+        return minutes.toString()
+    }
+
     fun getStringFromMillis(millis: Long):String {
         val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
         if(minutes < 1){
@@ -25,14 +33,14 @@ class TimeHelper(val context: Context) {
         return context.resources.getString(R.string.minute, minutes)
     }
 
-    fun getStringFromSeconds(millis: Long):String {
-        val minutes = TimeUnit.SECONDS.toMinutes(millis)
+    fun getStringFromSeconds(seconds: Long):String {
+        val minutes = TimeUnit.SECONDS.toMinutes(seconds)
         if(minutes < 1){
             return context.resources.getString(R.string.minute, 1)
         }
 
         if (minutes > 60){
-            val hour = TimeUnit.SECONDS.toHours(millis)
+            val hour = TimeUnit.SECONDS.toHours(seconds)
             if(minutes - 60 > 0){
                 val leftMins = minutes - 60
                 return context.resources.getString(R.string.hour, hour) +

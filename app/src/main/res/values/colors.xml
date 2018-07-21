@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#26a69a</color>
+    <color name="colorPrimaryDark">#15978b</color>
     <color name="colorAccent">#558b2f</color>
     <color name="route_red">#bc3234</color>
     <color name="white">#ffffff</color>
@@ -10,11 +10,11 @@
     <color name="marker_green">#2e7d32</color>
     <color name="marker_yellow">#fdd835</color>
     <color name="route_start_point">#0056e1</color>
-    <color name="route_end_point">#00ae5f</color>
-    <color name="separator_gray">#a0c1b2</color>
+    <color name="route_end_point">#9c27b0</color>
+    <color name="separator_gray">#c2c2c2</color>
     <color name="blue_text">#2979ff</color>
-    <color name="bus_yellow">#F6CF09</color>
-    <color name="subway_blue">#1496bb</color>
+    <color name="bus_step_color">#2979ff</color>
+    <color name="subway_step_color">#d32f2f</color>
     <color name="walk_green">#15AC18</color>
     <color name="transparent">#00000000</color>
 </resources>
