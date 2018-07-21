@@ -3,13 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginRight="2dp"
+    android:layout_marginRight="4dp"
     android:id="@+id/miniLegLayout"
-    tools:background="@color/bus_yellow"
+    tools:background="@color/bus_step_color"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_background"
-    android:padding="4dp">
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="8dp"
+    >
 
     <ImageView
         android:id="@+id/ivMode"
@@ -29,14 +33,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvBusNum"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="20 min."/>
+        android:textSize="16sp"
+        tools:text="20"/>
+
+    <TextView
+        android:id="@+id/tvTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="2dp"
+        android:text="min"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvTime"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74"/>
 
     <TextView
         android:id="@+id/tvBusNum"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:background="@drawable/bus_num"
         android:text="88"
         android:textColor="@color/white"

@@ -19,7 +19,7 @@ class MiniStepView(context: Context) :
     constructor(context: Context, leg: Leg) : this(context) {
         LayoutInflater.from(context).inflate(R.layout.mini_step_view_layout, this, true)
 
-        tvTime.text = timeHelper.getStringFromMillis(leg.duration.toLong())
+        tvTime.text = timeHelper.getMinutesFromMillis(leg.duration.toLong())
         tvBusNum.visibility = View.GONE
         when (leg.mode) {
             Mode.WALK -> {
@@ -29,13 +29,11 @@ class MiniStepView(context: Context) :
             Mode.BUS -> {
                 tvBusNum.visibility = View.VISIBLE
                 tvBusNum.text = leg.route
-                DrawableHelper.setDrawableColor(context,miniLegLayout,R.color.bus_yellow)
+                DrawableHelper.setDrawableColor(context,miniLegLayout,R.color.bus_step_color)
                 ivMode.setImageResource(R.drawable.ic_bus)
             }
             Mode.SUBWAY -> {
-//                tvBusNum.visibility = View.VISIBLE
-//                tvBusNum.text = leg.route
-                DrawableHelper.setDrawableColor(context,miniLegLayout,R.color.subway_blue)
+                DrawableHelper.setDrawableColor(context,miniLegLayout,R.color.subway_step_color)
                 ivMode.setImageResource(R.drawable.ic_subway)
             }
         }

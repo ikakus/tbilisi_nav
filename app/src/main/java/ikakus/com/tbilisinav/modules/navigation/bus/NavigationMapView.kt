@@ -41,7 +41,8 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
         mapReady = true
         mMap?.uiSettings?.isZoomGesturesEnabled = true
         mMap?.uiSettings?.isScrollGesturesEnabled = true
-        mMap?.uiSettings?.isZoomControlsEnabled = true
+        mMap?.uiSettings?.isZoomControlsEnabled = false
+
         val cu = CameraUpdateFactory.newLatLngZoom(TBILISI, 14f)
         mMap?.moveCamera(cu)
         mapReadyPublisher.onNext(true)
@@ -161,7 +162,13 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
     }
 
     private fun show(latLng: LatLng, animate: Boolean) {
-        val cu = CameraUpdateFactory.newLatLng(latLng)
+        val desiredPointZoom = 18f
+        val zoom = if (mMap?.cameraPosition?.zoom!! > 18) {
+            mMap?.cameraPosition?.zoom!!
+        } else {
+            desiredPointZoom
+        }
+        val cu = CameraUpdateFactory.newLatLngZoom(latLng, zoom)
         if (animate) {
             mMap?.animateCamera(cu)
         } else {
@@ -174,7 +181,8 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
         array.map { builder.include(it) }
         val bounds = builder.build()
         val padding = 80 // offset from edges of the map in pixels
-        val cu = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+        mMap?.setPadding(padding, padding + 180, padding, padding)
+        val cu = CameraUpdateFactory.newLatLngBounds(bounds, 0)
         if (animate) {
             mMap?.animateCamera(cu)
         } else {

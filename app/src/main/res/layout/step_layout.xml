@@ -161,7 +161,7 @@
             android:layout_below="@id/topBullet"
             android:layout_margin="2dp"
             android:layout_centerHorizontal="true"
-            android:background="@color/walk_green"/>
+            android:background="@color/marker_green"/>
 
         <ImageView
             android:id="@+id/bottomBullet"

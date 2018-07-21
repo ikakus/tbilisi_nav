@@ -7,4 +7,10 @@
     <string name="walk">Walk</string>
     <string name="take_subway">Take subway</string>
     <string name="take_bus_number">Take bus number</string>
+    <string name="min">min</string>
+    <string name="total">Total</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="endPoint">B</string>
+    <string name="startPoint">A</string>
 </resources>

@@ -12,7 +12,7 @@
         app:layout_constraintBottom_toTopOf="@+id/stepGuideView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/routeSelector"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ikakus.com.tbilisinav.modules.navigation.bus.StepGuideView
         android:id="@+id/stepGuideView"
@@ -29,7 +29,6 @@
         android:id="@+id/routeSelector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/stepGuideView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

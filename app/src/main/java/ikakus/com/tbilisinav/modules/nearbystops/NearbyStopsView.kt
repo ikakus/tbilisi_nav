@@ -50,7 +50,7 @@ class NearbyStopsView(context: Context, attrs: AttributeSet) :
         }
         bind()
         pageChangeListener = PageChangeListener()
-        viewpager.addOnPageChangeListener(pageChangeListener)
+        viewPager.addOnPageChangeListener(pageChangeListener)
     }
 
     inner class PageChangeListener : ViewPager.OnPageChangeListener{
@@ -99,12 +99,12 @@ class NearbyStopsView(context: Context, attrs: AttributeSet) :
         stops = state.stops
 
         pagerAdapter = NearbyStopsPagerAdapter(context)
-        viewpager!!.adapter = pagerAdapter
+        viewPager!!.adapter = pagerAdapter
 
         if (state.stops != null && state.stops.isNotEmpty()) {
             container.removeAllViews()
             pagerAdapter.items = state.stops
-            pageChangeListener.onPageSelected(viewpager.currentItem)
+            pageChangeListener.onPageSelected(viewPager.currentItem)
         }
     }
 

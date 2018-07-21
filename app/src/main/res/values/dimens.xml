@@ -2,4 +2,8 @@
 <resources>
     <dimen name="marker_text_size">12sp</dimen>
     <dimen name="map_marker_radius">20dp</dimen>
+
+    <dimen name="sizePointIndicator">8dp</dimen>
+    <dimen name="marginPointIndicator">8dp</dimen>
+
 </resources>
