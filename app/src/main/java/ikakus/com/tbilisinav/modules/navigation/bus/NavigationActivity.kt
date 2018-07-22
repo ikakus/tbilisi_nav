@@ -1,9 +1,13 @@
 package ikakus.com.tbilisinav.modules.navigation.bus
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import com.google.android.gms.maps.model.LatLng
 import ikakus.com.tbilisinav.BaseActivity
@@ -49,7 +53,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         navListener.receiver = this
 
         navigationMapView.mapReadyPublisher.subscribe {
-            bind()
+            enableMyLocationIfPermitted()
         }
 
         stepGuideView.pageChangePublisher.subscribe {
@@ -189,6 +193,32 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     override fun onLowMemory() {
         super.onLowMemory()
         navigationMapView.onLowMemory()
+    }
+
+    private val LOCATION_PERMISSION_REQUEST_CODE = 111
+
+    private fun enableMyLocationIfPermitted() {
+        if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE)
+        } else {
+            bind()
+            navigationMapView.setLocationEnabled()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,grantResults: IntArray) {
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    enableMyLocationIfPermitted()
+                }
+                return
+            }
+        }
     }
 
     companion object {
