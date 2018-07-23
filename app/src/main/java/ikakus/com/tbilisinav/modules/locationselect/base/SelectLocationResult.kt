@@ -11,4 +11,8 @@ sealed class SelectLocationResult : MviResult {
     sealed class SelectEndResult : SelectLocationResult(){
         data class Success(val location: LatLng) : SelectEndResult()
     }
+
+    sealed class ClearLocationsResult : SelectLocationResult(){
+        class Success : ClearLocationsResult()
+    }
 }

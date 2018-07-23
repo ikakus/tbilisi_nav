@@ -13,4 +13,7 @@
     <string name="to">To:</string>
     <string name="endPoint">B</string>
     <string name="startPoint">A</string>
+    <string name="not_selected">Not selected</string>
+    <string name="select_start">Select starting point</string>
+    <string name="select_end">Select destination point</string>
 </resources>

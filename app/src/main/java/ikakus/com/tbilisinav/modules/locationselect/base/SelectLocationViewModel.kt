@@ -2,7 +2,6 @@ package ikakus.com.tbilisinav.modules.locationselect.base
 
 import android.arch.lifecycle.ViewModel
 import ikakus.com.tbilisinav.core.mvibase.MviViewModel
-import ikakus.com.tbilisinav.utils.notOfType
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.functions.BiFunction
@@ -28,17 +27,15 @@ class SelectLocationViewModel(private val actionProcessorHolder: SelectLocationA
     private val intentFilter: ObservableTransformer<SelectLocationIntent, SelectLocationIntent>
         get() = ObservableTransformer { intents ->
             intents.publish { shared ->
-                Observable.merge<SelectLocationIntent>(
-                        shared.ofType(SelectLocationIntent.SelectStartLocationAction::class.java).take(1),
-                        shared.notOfType(SelectLocationIntent.SelectStartLocationAction::class.java)
-                )
+                shared
             }
         }
 
     private fun actionFromIntent(intent: SelectLocationIntent): SelectLocationAction {
         return when (intent) {
-            is SelectLocationIntent.SelectStartLocationAction -> SelectLocationAction.SelectStartLocationAction(intent.location)
-            is SelectLocationIntent.SelectEndLocationAction -> SelectLocationAction.SelectEndLocationAction(intent.location)
+            is SelectLocationIntent.SelectStartLocationIntent -> SelectLocationAction.SelectStartLocationAction(intent.location)
+            is SelectLocationIntent.SelectEndLocationIntent -> SelectLocationAction.SelectEndLocationAction(intent.location)
+            is SelectLocationIntent.ClearLocationsIntent -> SelectLocationAction.ClearLocationsAction()
         }
     }
 
@@ -53,6 +50,7 @@ class SelectLocationViewModel(private val actionProcessorHolder: SelectLocationA
             when (result) {
                 is SelectLocationResult.SelectStartResult.Success -> previousState.copy(startLocation = result.location)
                 is SelectLocationResult.SelectEndResult.Success -> previousState.copy(endLocation = result.location)
+                is SelectLocationResult.ClearLocationsResult.Success -> previousState.copy(startLocation = null, endLocation = null)
             }
         }
     }

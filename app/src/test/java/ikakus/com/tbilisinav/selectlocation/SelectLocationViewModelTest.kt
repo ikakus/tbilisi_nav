@@ -33,7 +33,7 @@ class SelectLocationViewModelTest{
     @Test
     fun setStartLocation(){
         selectLocationViewModel.processIntents(Observable.just(
-                SelectLocationIntent.SelectStartLocationAction(LatLng(1.0,1.0))
+                SelectLocationIntent.SelectStartLocationIntent(LatLng(1.0,1.0))
         ))
 
         testObserver.assertValueAt(1){(startLocation, _) ->
@@ -44,7 +44,7 @@ class SelectLocationViewModelTest{
     @Test
     fun setEndLocation(){
         selectLocationViewModel.processIntents(Observable.just(
-                SelectLocationIntent.SelectEndLocationAction(LatLng(1.0,1.0))
+                SelectLocationIntent.SelectEndLocationIntent(LatLng(1.0,1.0))
         ))
 
         testObserver.assertValueAt(1){(_, endLocation) ->

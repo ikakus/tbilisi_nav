@@ -32,17 +32,31 @@ class SelectLocationActionProcessorHolder(private val schedulerProvider: BaseSch
                 }
             }
 
+    private val clearLocationsProcessor =
+            ObservableTransformer<SelectLocationAction.ClearLocationsAction, SelectLocationResult> { actions ->
+                actions.flatMap { action ->
+                    Single.just(action)
+                            .toObservable()
+                            .map { SelectLocationResult.ClearLocationsResult.Success() }
+                            .cast(SelectLocationResult.ClearLocationsResult::class.java)
+                            .subscribeOn(schedulerProvider.io())
+                            .observeOn(schedulerProvider.ui())
+                }
+            }
+
 
     internal var actionProcessor =
             ObservableTransformer<SelectLocationAction, SelectLocationResult> { actions ->
                 actions.publish { shared ->
                     Observable.merge<SelectLocationResult>(
                             shared.ofType(SelectLocationAction.SelectStartLocationAction::class.java).compose(selectStartProcessor),
+                            shared.ofType(SelectLocationAction.ClearLocationsAction::class.java).compose(clearLocationsProcessor),
                             shared.ofType(SelectLocationAction.SelectEndLocationAction::class.java).compose(selectEndProcessor))
                             .mergeWith(
                                     shared.filter { v ->
                                         v !is SelectLocationAction.SelectStartLocationAction &&
-                                                v !is SelectLocationAction.SelectEndLocationAction
+                                                v !is SelectLocationAction.SelectEndLocationAction &&
+                                                v !is SelectLocationAction.ClearLocationsAction
                                     }
                                             .flatMap { w ->
                                                 Observable.error<SelectLocationResult>(

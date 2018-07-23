@@ -22,57 +22,78 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val vModel: SelectLocationViewModel by viewModel()
 
-    private val selectStartLocationIntent = PublishSubject.create<SelectLocationIntent.SelectStartLocationAction>()
-    private val selectEndLocationIntent = PublishSubject.create<SelectLocationIntent.SelectEndLocationAction>()
+    private val selectStartLocationIntent
+            = PublishSubject.create<SelectLocationIntent.SelectStartLocationIntent>()
+    private val selectEndLocationIntent
+            = PublishSubject.create<SelectLocationIntent.SelectEndLocationIntent>()
+    private val clearLocationsIntent
+            = PublishSubject.create<SelectLocationIntent.ClearLocationsIntent>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activty_select_location)
         selectLocationMapView.onCreate(savedInstanceState)
-        bind()
 
-        button3.setOnClickListener {
+        selectLocationMapView.mapReadyPublisher.subscribe {
+            enableMyLocationIfPermitted()
+        }
+
+        buttonSelectLocation.setOnClickListener {
             if (isStart) {
-                selectStartLocationIntent.onNext(SelectLocationIntent.SelectStartLocationAction(selectLocationMapView.getCenter()!!))
+                selectStartLocationIntent
+                        .onNext(SelectLocationIntent.SelectStartLocationIntent(selectLocationMapView.getCenter()!!))
             } else {
-                selectEndLocationIntent.onNext(SelectLocationIntent.SelectEndLocationAction(selectLocationMapView.getCenter()!!))
+                selectEndLocationIntent
+                        .onNext(SelectLocationIntent.SelectEndLocationIntent(selectLocationMapView.getCenter()!!))
             }
         }
     }
 
     override fun intents(): Observable<SelectLocationIntent> {
-        return Observable.merge(getSelectStartLocationIntent(), getSelectEndLocationIntent())
+        return Observable.merge(getSelectStartLocationIntent(), getSelectEndLocationIntent(), getClearLocationsIntent())
     }
 
     private var isStart: Boolean = true
 
     override fun render(state: SelectLocationViewState) {
+        isStart = true
         if (state.startLocation == null) {
+            tvFrom.text = getString(R.string.not_selected)
+            buttonSelectLocation.text = getString(R.string.select_start)
+
         } else {
-            tvFrom.text = "From: " + state.startLocation.toString()
+            tvFrom.text =  state.startLocation.toString()
+            buttonSelectLocation.text = getString(R.string.select_end)
             isStart = false
         }
 
         if (state.endLocation == null) {
+            tvTo.text = getString(R.string.not_selected)
         } else {
-            tvTo.text = "To: " + state.endLocation.toString()
+            tvTo.text = state.endLocation.toString()
         }
 
         if (state.startLocation != null && state.endLocation != null) {
             NavigationActivity.start(this,
                     state.startLocation,
                     state.endLocation)
+            clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
         }
     }
 
     private fun getSelectStartLocationIntent():
-            Observable<SelectLocationIntent.SelectStartLocationAction> {
+            Observable<SelectLocationIntent.SelectStartLocationIntent> {
         return selectStartLocationIntent
     }
 
     private fun getSelectEndLocationIntent():
-            Observable<SelectLocationIntent.SelectEndLocationAction> {
+            Observable<SelectLocationIntent.SelectEndLocationIntent> {
         return selectEndLocationIntent
+    }
+
+    private fun getClearLocationsIntent():
+            Observable<SelectLocationIntent.ClearLocationsIntent> {
+        return clearLocationsIntent
     }
 
     private fun bind() {
@@ -91,6 +112,7 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
 
     override fun onDestroy() {
         super.onDestroy()
+        disposables.dispose()
         selectLocationMapView.onDestroy()
     }
 
@@ -119,7 +141,7 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
                     LOCATION_PERMISSION_REQUEST_CODE)
         } else {
             bind()
-//            selectLocationMapView.setLocationEnabled()
+            selectLocationMapView.setLocationEnabled()
         }
     }
 
