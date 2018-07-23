@@ -1,6 +1,6 @@
 package ikakus.com.tbilisinav.modules.stopsmap.di
 
-import ikakus.com.tbilisinav.core.schedulers.ImmediateSchedulerProvider
+import ikakus.com.tbilisinav.core.schedulers.SchedulerProvider
 import ikakus.com.tbilisinav.data.source.busstops.BusStopRepository
 import ikakus.com.tbilisinav.data.source.busstops.local.LocalBusStopDataSource
 import ikakus.com.tbilisinav.data.source.busstops.remote.RemoteBusStopDataSource
@@ -16,7 +16,7 @@ class StopsMapModule {
                     BusStopRepository(
                             RemoteBusStopDataSource(get()),
                             LocalBusStopDataSource(get())),
-                    ImmediateSchedulerProvider())
+                    SchedulerProvider())
         }
         viewModel { StopsMapViewModel(get()) }
     }

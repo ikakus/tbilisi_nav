@@ -1,6 +1,6 @@
 package ikakus.com.tbilisinav.modules.busroute.routelist.di
 
-import ikakus.com.tbilisinav.core.schedulers.ImmediateSchedulerProvider
+import ikakus.com.tbilisinav.core.schedulers.SchedulerProvider
 import ikakus.com.tbilisinav.data.source.route.RouteRepository
 import ikakus.com.tbilisinav.data.source.route.local.LocalRouteDataSource
 import ikakus.com.tbilisinav.data.source.route.remote.RemoteRouteDataSource
@@ -16,7 +16,7 @@ class RouteListModule {
                     RouteRepository(
                             RemoteRouteDataSource(get()),
                             LocalRouteDataSource()),
-                    ImmediateSchedulerProvider())
+                    SchedulerProvider())
         }
         viewModel { RouteListViewModel(get()) }
     }

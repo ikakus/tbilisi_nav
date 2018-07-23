@@ -29,7 +29,7 @@ class SelectLocationViewModel(private val actionProcessorHolder: SelectLocationA
         get() = ObservableTransformer { intents ->
             intents.publish { shared ->
                 Observable.merge<SelectLocationIntent>(
-                        shared.ofType(SelectLocationIntent.SelectEndLocationAction::class.java).take(1),
+                        shared.ofType(SelectLocationIntent.SelectStartLocationAction::class.java).take(1),
                         shared.notOfType(SelectLocationIntent.SelectStartLocationAction::class.java)
                 )
             }

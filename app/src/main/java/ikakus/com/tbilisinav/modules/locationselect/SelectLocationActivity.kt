@@ -5,13 +5,13 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.widget.Toast
 import ikakus.com.tbilisinav.BaseActivity
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.core.mvibase.MviView
 import ikakus.com.tbilisinav.modules.locationselect.base.SelectLocationIntent
 import ikakus.com.tbilisinav.modules.locationselect.base.SelectLocationViewModel
 import ikakus.com.tbilisinav.modules.locationselect.base.SelectLocationViewState
+import ikakus.com.tbilisinav.modules.navigation.bus.NavigationActivity
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
@@ -33,28 +33,10 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
 
         button3.setOnClickListener {
             if (isStart) {
-                selectStartLocationIntent.
-                        onNext(SelectLocationIntent.
-                                SelectStartLocationAction(selectLocationMapView.getCenter()!!))
+                selectStartLocationIntent.onNext(SelectLocationIntent.SelectStartLocationAction(selectLocationMapView.getCenter()!!))
             } else {
-                selectEndLocationIntent.
-                        onNext(SelectLocationIntent.
-                                SelectEndLocationAction(selectLocationMapView.getCenter()!!))
+                selectEndLocationIntent.onNext(SelectLocationIntent.SelectEndLocationAction(selectLocationMapView.getCenter()!!))
             }
-            //            if (selectLocationMapView.from == null) {
-//                selectLocationMapView.from = selectLocationMapView.getCenter()
-//                tvFrom.text = "From: " + selectLocationMapView.from?.toString()
-//            } else {
-//                selectLocationMapView.to = selectLocationMapView.getCenter()
-//                tvTo.text = "To: " + selectLocationMapView.to?.toString()
-//
-//                NavigationActivity.start(this,
-//                        selectLocationMapView.from!!,
-//                        selectLocationMapView.to!!)
-//
-//                selectLocationMapView.from = null
-//                selectLocationMapView.to = null
-//            }
         }
     }
 
@@ -66,16 +48,20 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
 
     override fun render(state: SelectLocationViewState) {
         if (state.startLocation == null) {
-            Toast.makeText(this, "First ", Toast.LENGTH_SHORT).show()
         } else {
             tvFrom.text = "From: " + state.startLocation.toString()
             isStart = false
         }
 
         if (state.endLocation == null) {
-            Toast.makeText(this, "Second ", Toast.LENGTH_SHORT).show()
         } else {
             tvTo.text = "To: " + state.endLocation.toString()
+        }
+
+        if (state.startLocation != null && state.endLocation != null) {
+            NavigationActivity.start(this,
+                    state.startLocation,
+                    state.endLocation)
         }
     }
 

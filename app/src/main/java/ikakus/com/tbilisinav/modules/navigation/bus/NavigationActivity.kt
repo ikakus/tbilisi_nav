@@ -83,10 +83,10 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
 //        val from = LatLng(41.723157, 44.721624)
 //        val to = LatLng(41.725975, 44.769346)
-        val from = LatLng(41.725431, 44.7458504)
-        val to = LatLng(41.704032, 44.789967)
-//        return Observable.just(NavigationIntent.BusNavigateIntent(fromLatLng!!, toLatLng!!))
-        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
+//        val from = LatLng(41.725431, 44.7458504)
+//        val to = LatLng(41.704032, 44.789967)
+        return Observable.just(NavigationIntent.BusNavigateIntent(fromLatLng!!, toLatLng!!))
+//        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
     }
 
     private fun getSelectLegIntent(): Observable<NavigationIntent.SelectLegIntent> {
