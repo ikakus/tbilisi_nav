@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Provides different types of schedulers.
  */
-object SchedulerProvider : BaseSchedulerProvider {
+class SchedulerProvider : BaseSchedulerProvider {
   override fun computation(): Scheduler = Schedulers.computation()
 
   override fun io(): Scheduler = Schedulers.io()

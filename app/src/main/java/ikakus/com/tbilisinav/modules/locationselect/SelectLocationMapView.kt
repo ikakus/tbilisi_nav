@@ -1,5 +1,6 @@
 package ikakus.com.tbilisinav.modules.locationselect
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import ikakus.com.tbilisinav.R
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.map_view_layout.view.*
 
 
@@ -25,8 +27,8 @@ class SelectLocationMapView(context: Context, attrs: AttributeSet) : FrameLayout
 
     val TBILISI = LatLng(41.7151, 44.8271)
 
-    var from: LatLng? = null
-    var to: LatLng? = null
+    val mapReadyPublisher = PublishSubject.create<Boolean>()!!
+
 
     init {
         LayoutInflater.from(context).inflate(R.layout.map_view_layout, this, true)
@@ -41,6 +43,7 @@ class SelectLocationMapView(context: Context, attrs: AttributeSet) : FrameLayout
         val cu = CameraUpdateFactory.newLatLngZoom(TBILISI, 14f)
         mMap?.moveCamera(cu)
         mMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
+        mapReadyPublisher.onNext(true)
 
     }
 
@@ -71,6 +74,11 @@ class SelectLocationMapView(context: Context, attrs: AttributeSet) : FrameLayout
 
     fun getCenter(): LatLng? {
        return mMap?.cameraPosition?.target
+    }
+
+    @SuppressLint("MissingPermission")
+    fun setLocationEnabled() {
+        mMap?.isMyLocationEnabled = true
     }
 
 }

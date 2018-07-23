@@ -27,7 +27,7 @@ class DatabaseModule(context: Context) {
         val dao = db.busStopDao()
         val fileHelper = FileHelper()
         dao.getAll()
-                .subscribeOn(SchedulerProvider.io())
+                .subscribeOn(SchedulerProvider().io())
                 .subscribe(Consumer {
                     if (it.isEmpty()) {
                         val helper = DBHelper()

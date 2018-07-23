@@ -1,6 +1,6 @@
 package ikakus.com.tbilisinav.modules.navigation.bus.di
 
-import ikakus.com.tbilisinav.core.schedulers.ImmediateSchedulerProvider
+import ikakus.com.tbilisinav.core.schedulers.SchedulerProvider
 import ikakus.com.tbilisinav.data.source.navigation.NavigationRepository
 import ikakus.com.tbilisinav.data.source.navigation.local.LocalNavigationDataSource
 import ikakus.com.tbilisinav.data.source.navigation.remote.RemoteNavigationDataSource
@@ -17,7 +17,7 @@ class NavigationModule {
                     NavigationRepository(
                             RemoteNavigationDataSource(get()),
                             LocalNavigationDataSource(get())),
-                    ImmediateSchedulerProvider())
+                    SchedulerProvider())
         }
         viewModel { NavigationViewModel(get()) }
 
