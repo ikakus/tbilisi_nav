@@ -1,5 +1,6 @@
 package ikakus.com.tbilisinav.modules.navigation.bus
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
@@ -197,6 +198,11 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
             array.addAll(arr)
         }
         show(array, false)
+    }
+
+    @SuppressLint("MissingPermission")
+    fun setLocationEnabled() {
+        mMap?.isMyLocationEnabled = true
     }
 
 }
