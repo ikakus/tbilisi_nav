@@ -25,9 +25,6 @@ class SelectLocationMapView(context: Context, attrs: AttributeSet) : FrameLayout
 
     val TBILISI = LatLng(41.7151, 44.8271)
 
-    var from: LatLng? = null
-    var to: LatLng? = null
-
     init {
         LayoutInflater.from(context).inflate(R.layout.map_view_layout, this, true)
     }
