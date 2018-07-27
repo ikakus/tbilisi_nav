@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import com.google.android.gms.maps.model.LatLng
 import ikakus.com.tbilisinav.BaseActivity
 import ikakus.com.tbilisinav.R
 import ikakus.com.tbilisinav.core.mvibase.MviView
@@ -22,12 +23,9 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val vModel: SelectLocationViewModel by viewModel()
 
-    private val selectStartLocationIntent
-            = PublishSubject.create<SelectLocationIntent.SelectStartLocationIntent>()
-    private val selectEndLocationIntent
-            = PublishSubject.create<SelectLocationIntent.SelectEndLocationIntent>()
-    private val clearLocationsIntent
-            = PublishSubject.create<SelectLocationIntent.ClearLocationsIntent>()
+    private val selectStartLocationIntent = PublishSubject.create<SelectLocationIntent.SelectStartLocationIntent>()
+    private val selectEndLocationIntent = PublishSubject.create<SelectLocationIntent.SelectEndLocationIntent>()
+    private val clearLocationsIntent = PublishSubject.create<SelectLocationIntent.ClearLocationsIntent>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +43,22 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
             } else {
                 selectEndLocationIntent
                         .onNext(SelectLocationIntent.SelectEndLocationIntent(selectLocationMapView.getCenter()!!))
+
+                /** This is ugly workaround
+                 setting destination point should start
+                 NavigationActivity but handling this in render function
+                 causes starting of multiple NavigationActivity's due to
+                 view state's accumulation
+                */
+
+                endLocation = selectLocationMapView.getCenter()!!
+                if (startLocation != null && endLocation != null) {
+                    NavigationActivity.start(this,
+                            startLocation!!,
+                            endLocation!!)
+                }
+                clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
+
             }
         }
     }
@@ -55,6 +69,10 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
 
     private var isStart: Boolean = true
 
+    private var startLocation: LatLng? = null
+
+    private var endLocation: LatLng? = null
+
     override fun render(state: SelectLocationViewState) {
         isStart = true
         if (state.startLocation == null) {
@@ -62,7 +80,8 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
             buttonSelectLocation.text = getString(R.string.select_start)
 
         } else {
-            tvFrom.text =  state.startLocation.toString()
+            tvFrom.text = state.startLocation.toString()
+            startLocation = state.startLocation
             buttonSelectLocation.text = getString(R.string.select_end)
             isStart = false
         }
@@ -70,14 +89,8 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
         if (state.endLocation == null) {
             tvTo.text = getString(R.string.not_selected)
         } else {
+            endLocation = state.endLocation
             tvTo.text = state.endLocation.toString()
-        }
-
-        if (state.startLocation != null && state.endLocation != null) {
-            NavigationActivity.start(this,
-                    state.startLocation,
-                    state.endLocation)
-            clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
         }
     }
 
