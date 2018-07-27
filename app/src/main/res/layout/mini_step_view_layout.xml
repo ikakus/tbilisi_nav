@@ -17,8 +17,8 @@
 
     <ImageView
         android:id="@+id/ivMode"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvBusNum"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="16sp"
+        android:textSize="14sp"
         tools:text="20"/>
 
     <TextView
@@ -44,6 +44,7 @@
         android:text="min"
         android:textColor="@color/white"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvTime"
         app:layout_constraintTop_toTopOf="parent"

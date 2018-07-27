@@ -9,7 +9,7 @@ class TimeHelper(val context: Context) {
     fun getMinutesFromMillis(millis: Long): String{
         val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
         if(minutes < 1){
-            return context.resources.getString(R.string.minute, 1)
+            return "1"
         }
         return minutes.toString()
     }
