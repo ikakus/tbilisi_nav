@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import com.google.android.gms.maps.model.LatLng
 import ikakus.com.tbilisinav.BaseActivity
@@ -103,13 +105,19 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
 
     override fun render(state: NavigationViewState) {
         if (state.isLoading) {
-            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-            Timber.d("Loading")
+            loadingLayout.visibility = VISIBLE
+        } else {
+            loadingLayout.visibility = GONE
         }
 
         if (state.error != null) {
             Toast.makeText(this, state.error.message, Toast.LENGTH_SHORT).show()
             Timber.d(state.error.message)
+        }
+
+        if (state.busNavigation != null && state.busNavigation?.plan == null && !state.isLoading) {
+            Toast.makeText(this, "No route found for your request", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         val setPlan = plan == null || !(plan?.equals(state.busNavigation?.plan)!!)
@@ -209,7 +217,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() &&
