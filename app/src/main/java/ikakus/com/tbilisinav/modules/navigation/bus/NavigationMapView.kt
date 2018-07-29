@@ -75,7 +75,7 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
             array.map { builder.include(it) }
             val bounds = builder.build()
 
-            val padding = 20 // offset from edges of the map in pixels
+            val padding = 80 // offset from edges of the map in pixels
             val cu = CameraUpdateFactory.newLatLngBounds(bounds, padding)
 
             if (setCamera) {
@@ -181,8 +181,8 @@ class NavigationMapView(context: Context, attrs: AttributeSet) : FrameLayout(con
         val builder = LatLngBounds.Builder()
         array.map { builder.include(it) }
         val bounds = builder.build()
-        val padding = 80 // offset from edges of the map in pixels
-        mMap?.setPadding(padding, padding + 180, padding, padding)
+        val padding = 40 // offset from edges of the map in pixels
+        mMap?.setPadding(padding, padding + 160, padding, padding)
         val cu = CameraUpdateFactory.newLatLngBounds(bounds, 0)
         if (animate) {
             mMap?.animateCamera(cu)

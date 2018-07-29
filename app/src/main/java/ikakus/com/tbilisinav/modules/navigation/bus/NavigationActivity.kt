@@ -168,7 +168,6 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
                 rnd.nextInt(256))
     }
 
-
     private fun getLegColor(leg: Leg): Int {
         return when (leg.mode) {
             Mode.BUS -> resources.getColor(R.color.bus_step_color)
