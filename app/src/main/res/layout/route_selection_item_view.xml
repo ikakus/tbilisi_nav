@@ -17,11 +17,18 @@
         android:textSize="18sp"
         tools:text="23"/>
 
-    <LinearLayout
-        android:id="@+id/container"
+    <HorizontalScrollView
+        android:clickable="false"
+        android:focusable="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+
+    </HorizontalScrollView>
+
 </LinearLayout>
