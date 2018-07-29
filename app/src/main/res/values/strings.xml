@@ -5,15 +5,15 @@
     <string name="minute">%d min</string>
     <string name="hour">%d h</string>
     <string name="walk">Walk</string>
-    <string name="take_subway">Take subway</string>
-    <string name="take_bus_number">Take bus number</string>
+    <string name="take_subway">Take a subway</string>
+    <string name="take_bus_number">Take a bus number</string>
     <string name="min">min</string>
     <string name="total">Total</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
     <string name="endPoint">B</string>
     <string name="startPoint">A</string>
-    <string name="not_selected">Not selected</string>
+    <string name="not_selected">Location not set</string>
     <string name="select_start">Select starting point</string>
     <string name="select_end">Select destination point</string>
 </resources>
