@@ -51,6 +51,8 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
                  view state's accumulation
                 */
 
+
+
                 endLocation = selectLocationMapView.getCenter()!!
                 if (startLocation != null && endLocation != null) {
                     NavigationActivity.start(this,
@@ -58,7 +60,6 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
                             endLocation!!)
                 }
                 clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
-
             }
         }
     }
@@ -80,8 +81,10 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
             tvFrom.text = getString(R.string.not_selected)
             buttonSelectLocation.text = getString(R.string.select_start)
             buttonSelectLocation.setBackgroundDrawable(resources.getDrawable(R.drawable.selector_color_start))
+            selectLocationMapView.setStartPoint(null)
 
         } else {
+            selectLocationMapView.setStartPoint(state.startLocation)
             imageView.setImageDrawable(resources.getDrawable(R.drawable.ic_pin_b))
             tvFrom.text = state.startLocation.toString()
             startLocation = state.startLocation
@@ -92,9 +95,11 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
 
         if (state.endLocation == null) {
             tvTo.text = getString(R.string.not_selected)
+            selectLocationMapView.setEndPoint(null)
         } else {
             endLocation = state.endLocation
             tvTo.text = state.endLocation.toString()
+            selectLocationMapView.setEndPoint(state.endLocation)
         }
     }
 

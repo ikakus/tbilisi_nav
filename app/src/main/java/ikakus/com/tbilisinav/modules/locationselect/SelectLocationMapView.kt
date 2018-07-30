@@ -11,7 +11,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import ikakus.com.tbilisinav.R
+import ikakus.com.tbilisinav.utils.GMapHelper
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.map_view_layout.view.*
 
@@ -24,10 +27,15 @@ class SelectLocationMapView(context: Context, attrs: AttributeSet) : FrameLayout
 
     private var mMap: GoogleMap? = null
     private var mapReady: Boolean = false
+    private val mapHelper = GMapHelper()
 
     val TBILISI = LatLng(41.7151, 44.8271)
 
     val mapReadyPublisher = PublishSubject.create<Boolean>()!!
+
+
+    private var markerA: Marker? = null
+    private var markerB: Marker? = null
 
 
     init {
@@ -45,6 +53,34 @@ class SelectLocationMapView(context: Context, attrs: AttributeSet) : FrameLayout
         mMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
         mapReadyPublisher.onNext(true)
 
+    }
+
+    fun setStartPoint(latLng: LatLng?) {
+        markerA?.remove()
+
+        if (latLng != null) {
+            val start = MarkerOptions()
+                    .position(latLng)
+                    .icon(mapHelper.getMarkerIcon(context,
+                            "A",
+                            resources.getColor(R.color.route_start_point)))
+                    .anchor(0.5f, 0.5f)
+            markerA = mMap?.addMarker(start)
+        }
+    }
+
+    fun setEndPoint(latLng: LatLng?) {
+        markerB?.remove()
+
+        if (latLng != null) {
+            val end = MarkerOptions()
+                    .position(latLng)
+                    .icon(mapHelper.getMarkerIcon(context,
+                            "B",
+                            resources.getColor(R.color.route_end_point)))
+                    .anchor(0.5f, 0.5f)
+            markerB = mMap?.addMarker(end)
+        }
     }
 
     fun onCreate(bundle: Bundle?) {
@@ -73,7 +109,7 @@ class SelectLocationMapView(context: Context, attrs: AttributeSet) : FrameLayout
     }
 
     fun getCenter(): LatLng? {
-       return mMap?.cameraPosition?.target
+        return mMap?.cameraPosition?.target
     }
 
     @SuppressLint("MissingPermission")
