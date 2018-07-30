@@ -79,12 +79,14 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
             imageView.setImageDrawable(resources.getDrawable(R.drawable.ic_pin_a))
             tvFrom.text = getString(R.string.not_selected)
             buttonSelectLocation.text = getString(R.string.select_start)
+            buttonSelectLocation.setBackgroundDrawable(resources.getDrawable(R.drawable.selector_color_start))
 
         } else {
             imageView.setImageDrawable(resources.getDrawable(R.drawable.ic_pin_b))
             tvFrom.text = state.startLocation.toString()
             startLocation = state.startLocation
             buttonSelectLocation.text = getString(R.string.select_end)
+            buttonSelectLocation.setBackgroundDrawable(resources.getDrawable(R.drawable.selector_color_end))
             isStart = false
         }
 

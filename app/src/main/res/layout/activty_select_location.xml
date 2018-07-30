@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Select"
         android:textColor="@color/white"
-        android:background="@drawable/selector_color_back"
+        android:background="@drawable/selector_color_end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
