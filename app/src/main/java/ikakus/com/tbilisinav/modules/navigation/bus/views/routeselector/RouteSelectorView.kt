@@ -41,7 +41,7 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
         tvFrom.text = plan.from.name
         tvTo.text = plan.to.name
 
-        tvCounter.text = "+ ${plan.itineraries.size - 1} more"
+        tvCounter.text = resources.getString(R.string.more_routes,plan.itineraries.size - 1)
 
         itineraries = ArrayList(plan.itineraries)
         val iti = itineraries.first()
@@ -59,11 +59,10 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
     private fun togleList() {
         if (recyclerView.visibility == View.VISIBLE) {
             recyclerView.visibility = View.GONE
-            tvCounter.visibility = View.VISIBLE
+            counterLayout.visibility = View.VISIBLE
         } else {
             recyclerView.visibility = View.VISIBLE
-            tvCounter.visibility = View.GONE
-
+            counterLayout.visibility = View.GONE
         }
     }
 
