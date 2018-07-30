@@ -17,4 +17,5 @@
     <string name="select_start">Select starting point</string>
     <string name="select_end">Select destination point</string>
     <string name="more_routes">%d more</string>
+    <string name="no_route_found">No route found for your request</string>
 </resources>

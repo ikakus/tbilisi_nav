@@ -41,25 +41,25 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
                 selectStartLocationIntent
                         .onNext(SelectLocationIntent.SelectStartLocationIntent(selectLocationMapView.getCenter()!!))
             } else {
+                val endLocation = selectLocationMapView.getCenter()!!
                 selectEndLocationIntent
-                        .onNext(SelectLocationIntent.SelectEndLocationIntent(selectLocationMapView.getCenter()!!))
+                        .onNext(SelectLocationIntent.SelectEndLocationIntent(endLocation))
 
                 /** This is ugly workaround
-                 setting destination point should start
-                 NavigationActivity but handling this in render function
-                 causes starting of multiple NavigationActivity's due to
-                 view state's accumulation
-                */
+                setting destination point should start
+                NavigationActivity but handling this in render function
+                causes starting of multiple NavigationActivity's due to
+                view state's accumulation
+                 */
 
-
-
-                endLocation = selectLocationMapView.getCenter()!!
-                if (startLocation != null && endLocation != null) {
+                if (startLocation != null) {
                     NavigationActivity.start(this,
                             startLocation!!,
-                            endLocation!!)
+                            endLocation)
+
+                    clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
+
                 }
-                clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
             }
         }
     }
@@ -97,9 +97,9 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
             tvTo.text = getString(R.string.not_selected)
             selectLocationMapView.setEndPoint(null)
         } else {
+            selectLocationMapView.setEndPoint(state.endLocation)
             endLocation = state.endLocation
             tvTo.text = state.endLocation.toString()
-            selectLocationMapView.setEndPoint(state.endLocation)
         }
     }
 
@@ -125,6 +125,14 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
         )
         // Pass the UI's intents to the ViewModel
         vModel.processIntents(intents())
+    }
+
+    override fun onBackPressed() {
+        if (isStart) {
+            super.onBackPressed()
+        } else {
+            clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

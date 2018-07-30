@@ -27,6 +27,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
     implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     // Unit Testing
@@ -56,7 +57,7 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.2'
 
-    // Rotrofit
+    // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
@@ -64,7 +65,6 @@ dependencies {
 
     // Koin
     implementation "org.koin:koin-android-architecture:$koin_version"
-    implementation "com.android.support:recyclerview-v7:$support_version"
 
     // Room
     implementation "android.arch.persistence.room:runtime:$room_version"
@@ -83,8 +83,5 @@ dependencies {
 
     // Logger
     implementation 'com.orhanobut:logger:1.15'
-
-//    // Jackson
-//    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.4"
 
 }

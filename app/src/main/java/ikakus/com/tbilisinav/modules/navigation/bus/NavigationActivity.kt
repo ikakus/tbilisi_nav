@@ -82,13 +82,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     }
 
     private fun initialIntent(): Observable<NavigationIntent> {
-
-//        val from = LatLng(41.723157, 44.721624)
-//        val to = LatLng(41.725975, 44.769346)
-//        val from = LatLng(41.725431, 44.7458504)
-//        val to = LatLng(41.704032, 44.789967)
         return Observable.just(NavigationIntent.BusNavigateIntent(fromLatLng!!, toLatLng!!))
-//        return Observable.just(NavigationIntent.BusNavigateIntent(from, to))
     }
 
     private fun getSelectLegIntent(): Observable<NavigationIntent.SelectLegIntent> {
@@ -116,7 +110,7 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
         }
 
         if (state.busNavigation != null && state.busNavigation?.plan == null && !state.isLoading) {
-            Toast.makeText(this, "No route found for your request", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_route_found), Toast.LENGTH_SHORT).show()
             finish()
         }
 
@@ -173,6 +167,14 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
             Mode.BUS -> resources.getColor(R.color.bus_step_color)
             Mode.WALK -> resources.getColor(R.color.walk_green)
             Mode.SUBWAY -> resources.getColor(R.color.subway_step_color)
+        }
+    }
+
+    override fun onBackPressed() {
+        if(routeSelector.isListOpen){
+            routeSelector.toggleList()
+        }else {
+            super.onBackPressed()
         }
     }
 

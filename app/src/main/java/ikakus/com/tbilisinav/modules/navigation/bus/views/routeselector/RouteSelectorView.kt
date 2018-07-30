@@ -21,6 +21,8 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
 
     val selectedRoutePublisher = PublishSubject.create<Itinerary>()
     private var itineraries = ArrayList<Itinerary>()
+    var isListOpen = false
+     private set
 
     private var adapter: RouteSelectorAdapter
 
@@ -33,7 +35,7 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
                 DividerItemDecoration.VERTICAL))
         adapter.clickObservable.subscribe {
             setSelectedRoute(it)
-            togleList()
+            toggleList()
         }
     }
 
@@ -49,18 +51,20 @@ class RouteSelectorView(context: Context, attrs: AttributeSet) :
         adapter.setData(itineraries)
 
         imageView2.setOnClickListener {
-            togleList()
+            toggleList()
         }
-        tvCounter.setOnClickListener {
-            togleList()
+        counterLayout.setOnClickListener {
+            toggleList()
         }
     }
 
-    private fun togleList() {
+    fun toggleList() {
         if (recyclerView.visibility == View.VISIBLE) {
+            isListOpen = false
             recyclerView.visibility = View.GONE
             counterLayout.visibility = View.VISIBLE
         } else {
+            isListOpen = true
             recyclerView.visibility = View.VISIBLE
             counterLayout.visibility = View.GONE
         }
