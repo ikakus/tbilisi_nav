@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PagerIndicator">
+        <attr name="indicators" format="integer" />
+        <attr name="activeDrawable" format="integer" />
+        <attr name="inactiveDrawable" format="integer" />
+        <attr name="indicatorHorizontalMargin" format="dimension" />
+        <attr name="indicatorPointSize" format="dimension" />
+    </declare-styleable>
+</resources>

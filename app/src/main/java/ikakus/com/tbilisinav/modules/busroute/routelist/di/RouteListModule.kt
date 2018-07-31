@@ -1,9 +1,9 @@
 package ikakus.com.tbilisinav.modules.busroute.routelist.di
 
-import ikakus.com.tbilisinav.core.schedulers.ImmediateSchedulerProvider
-import ikakus.com.tbilisinav.data.source.RouteRepository
-import ikakus.com.tbilisinav.data.source.local.LocalRouteDataSource
-import ikakus.com.tbilisinav.data.source.remote.RemoteRouteDataSource
+import ikakus.com.tbilisinav.core.schedulers.SchedulerProvider
+import ikakus.com.tbilisinav.data.source.route.RouteRepository
+import ikakus.com.tbilisinav.data.source.route.local.LocalRouteDataSource
+import ikakus.com.tbilisinav.data.source.route.remote.RemoteRouteDataSource
 import ikakus.com.tbilisinav.modules.busroute.routelist.base.RouteListActionProcessorHolder
 import ikakus.com.tbilisinav.modules.busroute.routelist.base.RouteListViewModel
 import org.koin.android.architecture.ext.viewModel
@@ -16,7 +16,7 @@ class RouteListModule {
                     RouteRepository(
                             RemoteRouteDataSource(get()),
                             LocalRouteDataSource()),
-                    ImmediateSchedulerProvider())
+                    SchedulerProvider())
         }
         viewModel { RouteListViewModel(get()) }
     }

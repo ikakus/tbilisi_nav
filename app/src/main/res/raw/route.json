@@ -1,0 +1,806 @@
+{
+    "requestParameters": {
+        "optimize": "QUICK",
+        "wheelchair": "false",
+        "maxWalkDistance": "800.0",
+        "routerId": "",
+        "fromPlace": "41.723157,44.721624",
+        "toPlace": "41.725975,44.769346",
+        "mode": "TraverseMode (WALK, TRAM, SUBWAY, RAIL, BUS, FERRY, CABLE_CAR, GONDOLA, FUNICULAR, TRANSIT, TRAINISH, BUSISH)",
+        "numItineraries": "3"
+    },
+    "plan": {
+        "date": 1528467407802,
+        "from": {
+            "name": "ვაჟა ფშაველას გამზ. (Vazha Pshavela Ave.)",
+            "stopId": null,
+            "stopCode": null,
+            "lon": 44.72161503649348,
+            "lat": 41.72324999702517,
+            "arrival": null,
+            "departure": null,
+            "orig": null,
+            "zoneId": null,
+            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72161503649348,41.72324999702517]}"
+        },
+        "to": {
+            "name": "ბილიკი",
+            "stopId": null,
+            "stopCode": null,
+            "lon": 44.76942326305229,
+            "lat": 41.72605296544368,
+            "arrival": null,
+            "departure": null,
+            "orig": null,
+            "zoneId": null,
+            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.76942326305229,41.72605296544368]}"
+        },
+        "itineraries": [
+            {
+                "duration": 1591000,
+                "startTime": 1528467604000,
+                "endTime": 1528469195000,
+                "walkTime": 449,
+                "transitTime": 900,
+                "waitingTime": 242,
+                "walkDistance": 572.6212690288764,
+                "elevationLost": 0,
+                "elevationGained": 0,
+                "transfers": 0,
+                "fare": null,
+                "legs": [
+                    {
+                        "startTime": 1528467604000,
+                        "endTime": 1528467899000,
+                        "distance": 380.9748649463289,
+                        "mode": "WALK",
+                        "route": "",
+                        "agencyName": null,
+                        "agencyUrl": null,
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": null,
+                        "tripId": null,
+                        "from": {
+                            "name": "ვაჟა ფშაველას გამზ. (Vazha Pshavela Ave.)",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.72161503649348,
+                            "lat": 41.72324999702517,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72161503649348,41.72324999702517]}"
+                        },
+                        "to": {
+                            "name": "შავიშვილის ქუჩა - [963]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "963"
+                            },
+                            "stopCode": null,
+                            "lon": 44.72247071532559,
+                            "lat": 41.72581447954124,
+                            "arrival": 1528467900000,
+                            "departure": 1528467900000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72247071532559,41.72581447954124]}"
+                        },
+                        "legGeometry": {
+                            "points": "gat}Fau}oGU{EmAJaIt@_BHAY",
+                            "levels": null,
+                            "length": 6
+                        },
+                        "routeShortName": null,
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 295000,
+                        "bogusNonTransitLeg": false,
+                        "steps": [
+                            {
+                                "distance": 92.20584750418703,
+                                "relativeDirection": null,
+                                "streetName": "ვაჟა ფშაველას გამზ. (Vazha Pshavela Ave.)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.72161503649348,
+                                "lat": 41.72324999702517,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 277.3994120792279,
+                                "relativeDirection": "LEFT",
+                                "streetName": "მ. შავიშვილის ქ. (M. Shavishvili Str.)",
+                                "absoluteDirection": "NORTH",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7227169,
+                                "lat": 41.7233562,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 11.369605362913934,
+                                "relativeDirection": "RIGHT",
+                                "streetName": "ნუცუბიძის ქ. (Nutsubidze Str.)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7223316,
+                                "lat": 41.7258341,
+                                "elevation": ""
+                            }
+                        ]
+                    },
+                    {
+                        "startTime": 1528468020000,
+                        "endTime": 1528468920000,
+                        "distance": 3940.0990240755555,
+                        "mode": "BUS",
+                        "route": "6",
+                        "agencyName": "Tbilisi Transport Company",
+                        "agencyUrl": "http://www.ttc.com.ge",
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": "TTC",
+                        "tripId": "6_W_B_A_5_5",
+                        "from": {
+                            "name": "შავიშვილის ქუჩა - [963]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "963"
+                            },
+                            "stopCode": null,
+                            "lon": 44.72247071532559,
+                            "lat": 41.72581447954124,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72247071532559,41.72581447954124]}"
+                        },
+                        "to": {
+                            "name": "ყაზბეგის გამზირი #2 - [1004]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "1004"
+                            },
+                            "stopCode": null,
+                            "lon": 44.76739376192179,
+                            "lat": 41.726232520148436,
+                            "arrival": 1528468920000,
+                            "departure": 1528468920000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.76739376192179,41.726232520148436]}"
+                        },
+                        "legGeometry": {
+                            "points": "uqt}Fkz}oGK}BK}BEm@IsBIuBImBGwAGeA??OqCUuEG_BGgAIeBGsAMkCQgDIcBAWGsAMiCKqBIcBIeBGwAGeAKqCUoEE}@AOW}F?QSyDCk@A]I}AC]CO?AESEQESCQESI[I[EQ??EO?AGOMg@Og@M]CGEM_@cAEOEQCGAICOCOAOAEASAQKwBMaCIyBAKI_B?G[yGEy@A[_@qH?ME_AGeACm@U}EAKImBASQoDW{FEy@I{AQkEQwEGaBM{CCk@?MPo@l@sBl@yBJ_@l@{BZkB@KB}@Eq@K_DIeBCm@M}DSoEYaEGo@Gy@LUREn@KnFs@hAOFLJhCXrGHDhBKrAMXCVIFYSoF",
+                            "levels": null,
+                            "length": 128
+                        },
+                        "routeShortName": "6",
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 900000,
+                        "bogusNonTransitLeg": false,
+                        "intermediateStops": []
+                    },
+                    {
+                        "startTime": 1528469041000,
+                        "endTime": 1528469195000,
+                        "distance": 191.6464040825475,
+                        "mode": "WALK",
+                        "route": "",
+                        "agencyName": null,
+                        "agencyUrl": null,
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": null,
+                        "tripId": null,
+                        "from": {
+                            "name": "ყაზბეგის გამზირი (Kazbegi Ave)",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.767388852890974,
+                            "lat": 41.72628316965249,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.767388852890974,41.72628316965249]}"
+                        },
+                        "to": {
+                            "name": "ბილიკი",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.76942326305229,
+                            "lat": 41.72605296544368,
+                            "arrival": 1528469195000,
+                            "departure": 1528469195000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.76942326305229,41.72605296544368]}"
+                        },
+                        "legGeometry": {
+                            "points": "gtt}FcsfpGG{AMwDFo@N@BYNa@VY",
+                            "levels": null,
+                            "length": 8
+                        },
+                        "routeShortName": null,
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 154000,
+                        "bogusNonTransitLeg": false,
+                        "steps": [
+                            {
+                                "distance": 114.54970822735082,
+                                "relativeDirection": null,
+                                "streetName": "ყაზბეგის გამზირი (Kazbegi Ave)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.767388852890974,
+                                "lat": 41.72628316965249,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 20.912337139345784,
+                                "relativeDirection": "SLIGHTLY_RIGHT",
+                                "streetName": "ყაზბეგის გამზ. (Kazbek Ave.)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7687602,
+                                "lat": 41.7263998,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 56.184358715850905,
+                                "relativeDirection": "RIGHT",
+                                "streetName": "ბილიკი",
+                                "absoluteDirection": "SOUTH",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": true,
+                                "lon": 44.7690061,
+                                "lat": 41.7263587,
+                                "elevation": ""
+                            }
+                        ]
+                    }
+                ],
+                "tooSloped": false
+            },
+            {
+                "duration": 1600000,
+                "startTime": 1528468015000,
+                "endTime": 1528469615000,
+                "walkTime": 338,
+                "transitTime": 1020,
+                "waitingTime": 242,
+                "walkDistance": 425.85535517108207,
+                "elevationLost": 0,
+                "elevationGained": 0,
+                "transfers": 0,
+                "fare": null,
+                "legs": [
+                    {
+                        "startTime": 1528468015000,
+                        "endTime": 1528468199000,
+                        "distance": 234.20895108853458,
+                        "mode": "WALK",
+                        "route": "",
+                        "agencyName": null,
+                        "agencyUrl": null,
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": null,
+                        "tripId": null,
+                        "from": {
+                            "name": "ვაჟა ფშაველას გამზ. (Vazha Pshavela Ave.)",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.72161503649348,
+                            "lat": 41.72324999702517,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72161503649348,41.72324999702517]}"
+                        },
+                        "to": {
+                            "name": "შავიშვილის ქუჩა - [1255]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "1255"
+                            },
+                            "stopCode": null,
+                            "lon": 44.72164955488133,
+                            "lat": 41.722840128319774,
+                            "arrival": 1528468200000,
+                            "departure": 1528468200000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72164955488133,41.722840128319774]}"
+                        },
+                        "legGeometry": {
+                            "points": "gat}Fau}oGU{EpAOTbF",
+                            "levels": null,
+                            "length": 4
+                        },
+                        "routeShortName": null,
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 184000,
+                        "bogusNonTransitLeg": false,
+                        "steps": [
+                            {
+                                "distance": 92.20584750418703,
+                                "relativeDirection": null,
+                                "streetName": "ვაჟა ფშაველას გამზ. (Vazha Pshavela Ave.)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.72161503649348,
+                                "lat": 41.72324999702517,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 46.494426268178714,
+                                "relativeDirection": "RIGHT",
+                                "streetName": "მ. შავიშვილის ქ. (M. Shavishvili Str.)",
+                                "absoluteDirection": "SOUTH",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7227169,
+                                "lat": 41.7233562,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 95.50867731616884,
+                                "relativeDirection": "RIGHT",
+                                "streetName": "Vazha-Pshavela Avenue",
+                                "absoluteDirection": "WEST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7227916,
+                                "lat": 41.7229418,
+                                "elevation": ""
+                            }
+                        ]
+                    },
+                    {
+                        "startTime": 1528468320000,
+                        "endTime": 1528469340000,
+                        "distance": 3837.3855631353704,
+                        "mode": "BUS",
+                        "route": "150",
+                        "agencyName": "Tbilisi Transport Company",
+                        "agencyUrl": "http://www.ttc.com.ge",
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": "TTC",
+                        "tripId": "150_W_B_A_6_5",
+                        "from": {
+                            "name": "შავიშვილის ქუჩა - [1255]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "1255"
+                            },
+                            "stopCode": null,
+                            "lon": 44.72164955488133,
+                            "lat": 41.722840128319774,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72164955488133,41.722840128319774]}"
+                        },
+                        "to": {
+                            "name": "ყაზბეგის გამზირი #2 - [1004]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "1004"
+                            },
+                            "stopCode": null,
+                            "lon": 44.76739376192179,
+                            "lat": 41.726232520148436,
+                            "arrival": 1528469340000,
+                            "departure": 1528469340000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.76739376192179,41.726232520148436]}"
+                        },
+                        "legGeometry": {
+                            "points": "w~s}Fgu}oGC_@KcBI_AOWI?MGMKMKKKGQOmDAOBSPa@NQTODG?OOyCs@kMEy@@k@Ce@C]Gk@M}BGeBIgAIq@Ww@Q{ACSUcFm@}MGmAaAuT?Q@O@IFCnD]ZQNQH[Da@O}BOgD_AoSQaEk@oMCe@]uHc@_K?CmAqUUmEq@{NA_@}@ySo@uNY}GYkH",
+                            "levels": null,
+                            "length": 63
+                        },
+                        "routeShortName": "150",
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 1020000,
+                        "bogusNonTransitLeg": false,
+                        "intermediateStops": []
+                    },
+                    {
+                        "startTime": 1528469461000,
+                        "endTime": 1528469615000,
+                        "distance": 191.6464040825475,
+                        "mode": "WALK",
+                        "route": "",
+                        "agencyName": null,
+                        "agencyUrl": null,
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": null,
+                        "tripId": null,
+                        "from": {
+                            "name": "ყაზბეგის გამზირი (Kazbegi Ave)",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.767388852890974,
+                            "lat": 41.72628316965249,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.767388852890974,41.72628316965249]}"
+                        },
+                        "to": {
+                            "name": "ბილიკი",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.76942326305229,
+                            "lat": 41.72605296544368,
+                            "arrival": 1528469615000,
+                            "departure": 1528469615000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.76942326305229,41.72605296544368]}"
+                        },
+                        "legGeometry": {
+                            "points": "gtt}FcsfpGG{AMwDFo@N@BYNa@VY",
+                            "levels": null,
+                            "length": 8
+                        },
+                        "routeShortName": null,
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 154000,
+                        "bogusNonTransitLeg": false,
+                        "steps": [
+                            {
+                                "distance": 114.54970822735082,
+                                "relativeDirection": null,
+                                "streetName": "ყაზბეგის გამზირი (Kazbegi Ave)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.767388852890974,
+                                "lat": 41.72628316965249,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 20.912337139345784,
+                                "relativeDirection": "SLIGHTLY_RIGHT",
+                                "streetName": "ყაზბეგის გამზ. (Kazbek Ave.)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7687602,
+                                "lat": 41.7263998,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 56.184358715850905,
+                                "relativeDirection": "RIGHT",
+                                "streetName": "ბილიკი",
+                                "absoluteDirection": "SOUTH",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": true,
+                                "lon": 44.7690061,
+                                "lat": 41.7263587,
+                                "elevation": ""
+                            }
+                        ]
+                    }
+                ],
+                "tooSloped": false
+            },
+            {
+                "duration": 1395000,
+                "startTime": 1528468435000,
+                "endTime": 1528469830000,
+                "walkTime": 313,
+                "transitTime": 840,
+                "waitingTime": 242,
+                "walkDistance": 390.5988318207534,
+                "elevationLost": 0,
+                "elevationGained": 0,
+                "transfers": 0,
+                "fare": null,
+                "legs": [
+                    {
+                        "startTime": 1528468435000,
+                        "endTime": 1528468619000,
+                        "distance": 234.20895108853458,
+                        "mode": "WALK",
+                        "route": "",
+                        "agencyName": null,
+                        "agencyUrl": null,
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": null,
+                        "tripId": null,
+                        "from": {
+                            "name": "ვაჟა ფშაველას გამზ. (Vazha Pshavela Ave.)",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.72161503649348,
+                            "lat": 41.72324999702517,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72161503649348,41.72324999702517]}"
+                        },
+                        "to": {
+                            "name": "შავიშვილის ქუჩა - [1255]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "1255"
+                            },
+                            "stopCode": null,
+                            "lon": 44.72164955488133,
+                            "lat": 41.722840128319774,
+                            "arrival": 1528468620000,
+                            "departure": 1528468620000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72164955488133,41.722840128319774]}"
+                        },
+                        "legGeometry": {
+                            "points": "gat}Fau}oGU{EpAOTbF",
+                            "levels": null,
+                            "length": 4
+                        },
+                        "routeShortName": null,
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 184000,
+                        "bogusNonTransitLeg": false,
+                        "steps": [
+                            {
+                                "distance": 92.20584750418703,
+                                "relativeDirection": null,
+                                "streetName": "ვაჟა ფშაველას გამზ. (Vazha Pshavela Ave.)",
+                                "absoluteDirection": "EAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.72161503649348,
+                                "lat": 41.72324999702517,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 46.494426268178714,
+                                "relativeDirection": "RIGHT",
+                                "streetName": "მ. შავიშვილის ქ. (M. Shavishvili Str.)",
+                                "absoluteDirection": "SOUTH",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7227169,
+                                "lat": 41.7233562,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 95.50867731616884,
+                                "relativeDirection": "RIGHT",
+                                "streetName": "Vazha-Pshavela Avenue",
+                                "absoluteDirection": "WEST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7227916,
+                                "lat": 41.7229418,
+                                "elevation": ""
+                            }
+                        ]
+                    },
+                    {
+                        "startTime": 1528468740000,
+                        "endTime": 1528469580000,
+                        "distance": 3973.330822227543,
+                        "mode": "BUS",
+                        "route": "54",
+                        "agencyName": "Tbilisi Transport Company",
+                        "agencyUrl": "http://www.ttc.com.ge",
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": "TTC",
+                        "tripId": "54_W_B_A_1_4",
+                        "from": {
+                            "name": "შავიშვილის ქუჩა - [1255]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "1255"
+                            },
+                            "stopCode": null,
+                            "lon": 44.72164955488133,
+                            "lat": 41.722840128319774,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.72164955488133,41.722840128319774]}"
+                        },
+                        "to": {
+                            "name": "პეკინის გამზირი #33 - [3833]",
+                            "stopId": {
+                                "agencyId": "TTC",
+                                "id": "3833"
+                            },
+                            "stopCode": null,
+                            "lon": 44.76872286510639,
+                            "lat": 41.72722581435269,
+                            "arrival": 1528469580000,
+                            "departure": 1528469580000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.76872286510639,41.72722581435269]}"
+                        },
+                        "legGeometry": {
+                            "points": "{~s}Fgu}oGKgCKi@K[YISJMOWeGAa@JS`@ILYQeD{@wQe@yJGk@Qq@Uu@Im@AKAw@CsAMkDo@_NcAyTBk@F]pBStA[\\i@EqAQgCGsA_AoS~@nS_AoS~@nS_AoS~@nS_AoSeCqj@MkCy@eQgAiUfAhUgAiUyBod@wAqYK}@WOWNoA~@GD",
+                            "levels": null,
+                            "length": 53
+                        },
+                        "routeShortName": "54",
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 840000,
+                        "bogusNonTransitLeg": false,
+                        "intermediateStops": []
+                    },
+                    {
+                        "startTime": 1528469701000,
+                        "endTime": 1528469830000,
+                        "distance": 156.3898807322188,
+                        "mode": "WALK",
+                        "route": "",
+                        "agencyName": null,
+                        "agencyUrl": null,
+                        "routeColor": null,
+                        "routeTextColor": null,
+                        "interlineWithPreviousLeg": null,
+                        "tripShortName": null,
+                        "headsign": null,
+                        "agencyId": null,
+                        "tripId": null,
+                        "from": {
+                            "name": "პეკინის გამზირი (Pekin Ave)",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.768655804791926,
+                            "lat": 41.72715703183146,
+                            "arrival": null,
+                            "departure": null,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.768655804791926,41.72715703183146]}"
+                        },
+                        "to": {
+                            "name": "ბილიკი",
+                            "stopId": null,
+                            "stopCode": null,
+                            "lon": 44.76942326305229,
+                            "lat": 41.72605296544368,
+                            "arrival": 1528469830000,
+                            "departure": 1528469830000,
+                            "orig": null,
+                            "zoneId": null,
+                            "geometry": "{\"type\": \"Point\", \"coordinates\": [44.76942326305229,41.72605296544368]}"
+                        },
+                        "legGeometry": {
+                            "points": "uyt}Fa{fpGv@y@HKZC^LRIL?N@BYNa@VY",
+                            "levels": null,
+                            "length": 11
+                        },
+                        "routeShortName": null,
+                        "routeLongName": null,
+                        "boardRule": null,
+                        "alightRule": null,
+                        "duration": 129000,
+                        "bogusNonTransitLeg": false,
+                        "steps": [
+                            {
+                                "distance": 47.05215051657694,
+                                "relativeDirection": null,
+                                "streetName": "პეკინის გამზირი (Pekin Ave)",
+                                "absoluteDirection": "SOUTHEAST",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.768655804791926,
+                                "lat": 41.72715703183146,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 34.03427646360858,
+                                "relativeDirection": "SLIGHTLY_RIGHT",
+                                "streetName": "ყაზბეგის გამზ. (Kazbek Ave.)",
+                                "absoluteDirection": "SOUTH",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": false,
+                                "lon": 44.7690004,
+                                "lat": 41.726821,
+                                "elevation": ""
+                            },
+                            {
+                                "distance": 75.30345375203329,
+                                "relativeDirection": "SLIGHTLY_LEFT",
+                                "streetName": "ბილიკი",
+                                "absoluteDirection": "SOUTH",
+                                "exit": null,
+                                "stayOn": false,
+                                "bogusName": true,
+                                "lon": 44.7689573,
+                                "lat": 41.7265246,
+                                "elevation": ""
+                            }
+                        ]
+                    }
+                ],
+                "tooSloped": false
+            }
+        ]
+    }
+}

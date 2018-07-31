@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">Tbilisi nav</string>
-    <string name="key_google_api">AIzaSyDtf6I5OGhxJapM4rN4DF7p8FcblJrtLU8</string>
+    <string name="key_google_api">AIzaSyDLrUAlHPreYr9skH9TWnw18eTgEZ1gE8U</string>
+    <string name="less_than_minute">less than a minute</string>
+    <string name="minute">%d min</string>
+    <string name="hour">%d h</string>
+    <string name="walk">Walk</string>
+    <string name="take_subway">Take a subway</string>
+    <string name="take_bus_number">Take a bus number</string>
+    <string name="min">min</string>
+    <string name="total">Total</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="endPoint">B</string>
+    <string name="startPoint">A</string>
+    <string name="not_selected">Location not set</string>
+    <string name="select_start">Select starting point</string>
+    <string name="select_end">Select destination point</string>
+    <string name="more_routes">%d more</string>
+    <string name="no_route_found">No route found for your request</string>
 </resources>
