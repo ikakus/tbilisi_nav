@@ -1,0 +1,22 @@
+# Tbilisi nav
+
+Main idea of writing this app was practicing in new tools, acrchitecture, UI tricks or libs, anything 
+I wanted to try in "real" project that solves a problem. 
+
+It uses {Kotlin](https://github.com/JetBrains/kotlin), MVI acrhitecture from [Google's repo](https://github.com/oldergod/android-architecture) and a lot of [RxJava](https://github.com/ReactiveX/RxJava). 
+
+For DI I used [Koin](https://github.com/InsertKoinIO/koin), a nice lightweight lib.
+
+App icon is from awesome [Norbi Gaal](https://www.behance.net/gallery/23054143/Budapest-Public-Transport-flat-icon-set)'s work.
+
+This is still a WP project with a lot of cool stuff in mind.
+
+Some of the code you'll find was havily inspited by sweet [Tbilisi bus App](https://github.com/shvelo/tbilisi-bus)
+
+
+Play store link: 
+https://play.google.com/store/apps/details?id=ikakus.com.mvibusstop
+
+[Sample gif](https://media.giphy.com/media/9r1jOzpHMcQnxKpnfu/giphy.gif)
+
+![screen](https://i.imgur.com/lpknibq.png)
