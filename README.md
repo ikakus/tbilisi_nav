@@ -1,7 +1,6 @@
 # Tbilisi nav
 
-Main idea of writing this app was practicing in new tools, acrchitecture, UI tricks or libs, anything 
-I wanted to try in "real" project that solves a problem. 
+Main goal of writing this app was practicing in new tools, acrchitecture, UI tricks or libs, anything I wanted to try in "real" project that solves a problem. 
 
 It uses [Kotlin](https://github.com/JetBrains/kotlin) and MVI acrhitecture from [Google's repo](https://github.com/oldergod/android-architecture). 
 
@@ -13,8 +12,8 @@ App icon is from awesome [Norbi Gaal](https://www.behance.net/gallery/23054143/B
 
 This is still a WP project with a lot of cool stuff in mind.
 
-Play store link: 
-https://play.google.com/store/apps/details?id=ikakus.com.mvibusstop
+#### Download form [Play store](https://play.google.com/store/apps/details?id=ikakus.com.mvibusstop)
+ 
 
 [Sample gif](https://media.giphy.com/media/9r1jOzpHMcQnxKpnfu/giphy.gif)
 
