@@ -19,4 +19,6 @@ https://play.google.com/store/apps/details?id=ikakus.com.mvibusstop
 
 [Sample gif](https://media.giphy.com/media/9r1jOzpHMcQnxKpnfu/giphy.gif)
 
-![screen](https://i.imgur.com/lpknibq.png)
+<img src="https://i.imgur.com/lpknibq.png" width="338" height="600" />
+<img src="https://i.imgur.com/N0NBibp.png" width="338" height="600"/>
+<img src="https://i.imgur.com/wM59pjw.png" width="338" height="600"/>
