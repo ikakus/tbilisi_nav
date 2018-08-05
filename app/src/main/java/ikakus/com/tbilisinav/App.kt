@@ -1,6 +1,7 @@
 package ikakus.com.tbilisinav
 
 import android.app.Application
+import com.crashlytics.android.Crashlytics
 import ikakus.com.tbilisinav.core.di.DatabaseModule
 import ikakus.com.tbilisinav.core.di.NetworkModule
 import ikakus.com.tbilisinav.modules.busroute.routedetails.di.RouteDetailsModule
@@ -10,6 +11,7 @@ import ikakus.com.tbilisinav.modules.navigation.bus.di.NavigationModule
 import ikakus.com.tbilisinav.modules.nearbystops.di.NearbyModule
 import ikakus.com.tbilisinav.modules.stopinfo.di.StopInfoModule
 import ikakus.com.tbilisinav.modules.stopsmap.di.StopsMapModule
+import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -18,6 +20,7 @@ import timber.log.Timber.DebugTree
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
+        Fabric.with(this, Crashlytics())
         setupDi()
         setupTimber()
     }
