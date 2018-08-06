@@ -1,6 +1,8 @@
 package ikakus.com.tbilisinav.modules.locationselect
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -22,6 +24,7 @@ import org.koin.android.architecture.ext.viewModel
 class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, SelectLocationViewState> {
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val vModel: SelectLocationViewModel by viewModel()
+    private lateinit var viewState: SelectLocationViewState
 
     private val selectStartLocationIntent = PublishSubject.create<SelectLocationIntent.SelectStartLocationIntent>()
     private val selectEndLocationIntent = PublishSubject.create<SelectLocationIntent.SelectEndLocationIntent>()
@@ -35,71 +38,48 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
         selectLocationMapView.mapReadyPublisher.subscribe {
             enableMyLocationIfPermitted()
         }
-
-        buttonSelectLocation.setOnClickListener {
-            if (isStart) {
-                selectStartLocationIntent
-                        .onNext(SelectLocationIntent.SelectStartLocationIntent(selectLocationMapView.getCenter()!!))
-            } else {
-                val endLocation = selectLocationMapView.getCenter()!!
-                selectEndLocationIntent
-                        .onNext(SelectLocationIntent.SelectEndLocationIntent(endLocation))
-
-                /** This is ugly workaround
-                setting destination point should start
-                NavigationActivity but handling this in render function
-                causes starting of multiple NavigationActivity's due to
-                view state's accumulation
-                 */
-
-                if (startLocation != null) {
-                    NavigationActivity.start(this,
-                            startLocation!!,
-                            endLocation)
-
-                    clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
-
-                }
-            }
-        }
     }
 
     override fun intents(): Observable<SelectLocationIntent> {
         return Observable.merge(getSelectStartLocationIntent(), getSelectEndLocationIntent(), getClearLocationsIntent())
     }
 
-    private var isStart: Boolean = true
-
-    private var startLocation: LatLng? = null
-
-    private var endLocation: LatLng? = null
-
     override fun render(state: SelectLocationViewState) {
-        isStart = true
-        if (state.startLocation == null) {
+        viewState = state
+        selectLocationMapView.setStartPoint(state.startLocation)
+        selectLocationMapView.setEndPoint(state.endLocation)
+
+        if (isStart(viewState)) {
             imageView.setImageDrawable(resources.getDrawable(R.drawable.ic_pin_a))
-            tvFrom.text = getString(R.string.not_selected)
             buttonSelectLocation.text = getString(R.string.select_start)
             buttonSelectLocation.setBackgroundDrawable(resources.getDrawable(R.drawable.selector_color_start))
-            selectLocationMapView.setStartPoint(null)
-
         } else {
-            selectLocationMapView.setStartPoint(state.startLocation)
             imageView.setImageDrawable(resources.getDrawable(R.drawable.ic_pin_b))
-            tvFrom.text = state.startLocation.toString()
-            startLocation = state.startLocation
             buttonSelectLocation.text = getString(R.string.select_end)
             buttonSelectLocation.setBackgroundDrawable(resources.getDrawable(R.drawable.selector_color_end))
-            isStart = false
+        }
+
+        if (state.startLocation == null) {
+            tvFrom.text = getString(R.string.not_selected)
+        } else {
+            tvFrom.text = state.startLocation.toString()
         }
 
         if (state.endLocation == null) {
             tvTo.text = getString(R.string.not_selected)
-            selectLocationMapView.setEndPoint(null)
         } else {
-            selectLocationMapView.setEndPoint(state.endLocation)
-            endLocation = state.endLocation
             tvTo.text = state.endLocation.toString()
+        }
+
+        // Dunno if its Ok to handle navigation like this in render func
+        // IMHO this version is better than previous one
+
+        if (state.startLocation != null && state.endLocation != null) {
+
+            handleNavigation()
+            // finishing Activity because I don't how to reset
+            // viewModel so it does not repeat previous states
+            finish()
         }
     }
 
@@ -125,10 +105,41 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
         )
         // Pass the UI's intents to the ViewModel
         vModel.processIntents(intents())
+
+        buttonSelectLocation.setOnClickListener {
+            handleLocationSelection()
+        }
+    }
+
+    private fun handleNavigation() {
+        if (!isStart(viewState)) {
+            NavigationActivity.start(this,
+                    viewState.startLocation!!,
+                    viewState.endLocation!!)
+
+        }
+    }
+
+    private fun handleLocationSelection() {
+        if (isStart(viewState)) {
+            selectStartLocationIntent
+                    .onNext(SelectLocationIntent
+                            .SelectStartLocationIntent(selectLocationMapView.getCenter()!!))
+        } else {
+            selectEndLocationIntent
+                    .onNext(SelectLocationIntent
+                            .SelectEndLocationIntent(selectLocationMapView.getCenter()!!))
+        }
+    }
+
+    private fun isStart(viewState: SelectLocationViewState): Boolean {
+        if (viewState.startLocation == null) return true
+        return false
+
     }
 
     override fun onBackPressed() {
-        if (isStart) {
+        if (isStart(viewState)) {
             super.onBackPressed()
         } else {
             clearLocationsIntent.onNext(SelectLocationIntent.ClearLocationsIntent())
@@ -184,6 +195,18 @@ class SelectLocationActivity : BaseActivity(), MviView<SelectLocationIntent, Sel
                 }
                 return
             }
+        }
+    }
+
+    companion object {
+        private val FROM_LATLNG = "from"
+        private val TO_LATLNG = "to"
+
+        fun start(context: Context, from: LatLng?, to: LatLng?) {
+            val intent = Intent(context, SelectLocationActivity::class.java)
+            from?.let { intent.putExtra(FROM_LATLNG, it) }
+            to?.let { intent.putExtra(TO_LATLNG, it) }
+            context.startActivity(intent)
         }
     }
 }

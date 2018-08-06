@@ -19,6 +19,7 @@ import ikakus.com.tbilisinav.data.source.navigation.models.Itinerary
 import ikakus.com.tbilisinav.data.source.navigation.models.Leg
 import ikakus.com.tbilisinav.data.source.navigation.models.Mode
 import ikakus.com.tbilisinav.data.source.navigation.models.Plan
+import ikakus.com.tbilisinav.modules.locationselect.SelectLocationActivity
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationIntent
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewModel
 import ikakus.com.tbilisinav.modules.navigation.bus.base.NavigationViewState
@@ -171,9 +172,10 @@ class NavigationActivity : BaseActivity(), MviView<NavigationIntent, NavigationV
     }
 
     override fun onBackPressed() {
-        if(routeSelector.isListOpen){
+        if (routeSelector.isListOpen) {
             routeSelector.toggleList()
-        }else {
+        } else {
+            SelectLocationActivity.start(this, null, null)
             super.onBackPressed()
         }
     }
